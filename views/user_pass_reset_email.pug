@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h3=title
+  br
+  form(method='POST' action='/users/password-reset/')
+    
+    div.form-group
+      label(for='email') Enter the email address that you used to register. We will send you an email with your username and a password reset link.
+      input#email.form-control(type='text' name='email' required='true')
+    
+    button.btn.btn-primary(type='submit') Send

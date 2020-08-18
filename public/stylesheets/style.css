@@ -1,8 +1,42 @@
+/* Show it is fixed to the top */
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  min-height: 75rem;
+  padding-top: 4.5rem;
 }
 
-a {
-  color: #00B7FF;
+.sidebar-nav {
+  margin-top: 20px;
+  padding: 0;
+  list-style: none;
+}
+
+.alert-error {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
+
+.alert-success_msg {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+
+#tokenResend,
+#btnAddAuthor,
+#btnChangeAuthor,
+#btnRemoveAuthor {
+  font-size: small;
+}
+
+/* User Profile Dropdown */
+#dropdown02 {
+  width: 130px;
+  text-align: center;
+}
+
+/* For category lists - to be shown in 3 columns */
+#unorderedList {
+  list-style-type: none;
+  columns: 3;
 }

@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h3=title
+  br
+  form(method='POST' action='/users/resend/')
+    
+    div.form-group
+      label(for='email') Enter Your Email:
+      input#email.form-control(type='text' name='email' required='true')
+    
+    button.btn.btn-primary(type='submit') Send Verification Token

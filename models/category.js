@@ -16,7 +16,7 @@ var CategorySchema = new Schema(
 
 // Virtual for genre's URL
 CategorySchema.virtual("url").get(function () {
-  return "/category/" + this._id;
+  return "/categories/" + this._id;
 });
 
 //Export model

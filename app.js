@@ -12,6 +12,7 @@ const connectDB = require("./config/db");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
+var categoriesRouter = require("./routes/categories");
 
 //Load config
 dotenv.config({ path: "./config/config.env" });
@@ -19,7 +20,7 @@ dotenv.config({ path: "./config/config.env" });
 //Set up mongoose connection
 connectDB();
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -51,7 +52,7 @@ app.use(
 );
 
 //Express Messages Middleware
-app.use(flash());
+app.use(require("connect-flash")());
 app.use((req, res, next) => {
   res.locals.messages = require("express-messages")(req, res);
   next();
@@ -71,6 +72,7 @@ app.get("*", (req, res, next) => {
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+app.use("/categories", categoriesRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

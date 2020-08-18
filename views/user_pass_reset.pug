@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h3=title
+  br
+
+  form(method='POST' action=`/users/password-reset/${secretToken}`)
+
+    div.form-group
+      label(for='password') Enter New Password:
+      input#password.form-control(type='password' name='password' required='true')
+      label(for='password2') Confirm Password:
+      input#password2.form-control(type='password' name='password2' required='true')
+      label(for='token')
+      input#token.form-control(type='hidden' name='token' required='true' value=secretToken)
+    
+    button.btn.btn-primary(type='submit') Submit
+    | 
+    a.btn.btn-secondary(href='/users/login') Cancel

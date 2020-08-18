@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h3=title
+  br
+  form(method='POST' action=`/users/confirmation/${secretToken}`)
+    
+    div.form-group
+      label(for='email') Confirm Your Email:
+      input#email.form-control(type='text' name='email' required='true')
+      label(for='token')
+      input#token.form-control(type='hidden' name='token' required='true' value=secretToken)
+    
+    button.btn.btn-primary(type='submit') Verify

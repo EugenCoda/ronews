@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h3 #{title}
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='name') Category:
+      input#name.form-control(type='text', placeholder='Economy, Politics etc.' name='name' value=(undefined===category ? '' : category.name))
+    
+    button.btn.btn-primary(type='submit') Submit
+    | 
+    a.btn.btn-secondary(href='/categories') Cancel
+
+  if errors 
+   ul
+    for error in errors
+     li!= error.msg

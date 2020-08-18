@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h3=title
+
+  form(method='POST' action='/users/account/edit')
+    div.form-group
+      label(for='name') Name:
+      input#name.form-control(type='text' name='name' required='true' value=(undefined===user ? '' : user.name) )
+      label(for='email') Email:
+      input#email.form-control(type='text' name='email' required='true' value=(undefined===user ? '' : user.email) )
+    div.form-group
+      label(for='username') User Name:
+      input#username.form-control(type='text' name='username' required='true' value=(undefined===user ? '' : user.username) )
+
+    button.btn.btn-primary(type='submit') Submit
+    | 
+    a.btn.btn-secondary(href='/users/account') Cancel

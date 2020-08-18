@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  h3=title
+
+  form(method='POST' action='/users/register')
+    div.form-group
+      label(for='name') Name:
+      input#name.form-control(type='text' name='name' required='true')
+    div.form-group
+      label(for='email') Email:
+      input#email.form-control(type='text' name='email' required='true')
+    div.form-group
+      label(for='username') User Name:
+      input#username.form-control(type='text' name='username' required='true')
+    div.form-group
+      label(for='password') Password:
+      input#password.form-control(type='password' name='password' required='true')
+      label(for='password2') Confirm Password:
+      input#password2.form-control(type='password' name='password2' required='true')
+    
+    button.btn.btn-primary(type='submit') Submit
+    | 
+    a.btn.btn-secondary(href='/') Cancel

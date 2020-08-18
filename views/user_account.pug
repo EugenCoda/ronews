@@ -1,0 +1,49 @@
+extends layout
+
+block content
+  h3=title
+
+  div(style='margin-left:20px;margin-top:20px')
+
+    h5 # Profile
+    
+    div(style='margin-left:20px;margin-top:20px')
+      table.table.table-hover
+        tbody
+          tr
+            th(scope='row') Name:
+            td #{user.name}
+          tr
+            th(scope='row') User Name: 
+            td #{user.username}
+          tr
+            th(scope='row') Email: 
+            td #{user.email}
+          
+      a.btn.btn-primary(href='/users/account/edit') Edit Profile
+
+  div(style='margin-left:20px;margin-top:20px')
+
+    h5 # Change Password
+    
+    div(style='margin-left:20px;margin-top:20px')
+      form(method='POST' action='/users/account')
+        div.form-group
+          label(for='currentpassword') Current Password:
+          input#currentpassword.form-control(type='password' name='currentpassword' required='true')
+          label(for='newpassword') New Password:
+          input#newpassword.form-control(type='password' name='newpassword' required='true')
+          label(for='newpassword2') Confirm New Password:
+          input#newpassword2.form-control(type='password' name='newpassword2' required='true')
+          
+        button.btn.btn-primary(type='submit') Submit
+        | 
+        a.btn.btn-secondary(href='/users/account') Clear
+  
+  div(style='margin-left:20px;margin-top:20px')
+
+    h5 # Delete Account
+    
+    div(style='margin-left:20px;margin-top:20px')
+
+      a.btn.btn-danger(href='/users/account/delete') Delete account

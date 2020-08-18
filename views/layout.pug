@@ -1,7 +1,77 @@
 doctype html
-html
+html(lang='en')
   head
     title= title
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css', integrity='sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z', crossorigin='anonymous')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    block content
+    include layout_ignore
+    nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark
+      a.navbar-brand(href='/') Ro News
+      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarsExampleDefault', aria-controls='navbarsExampleDefault', aria-expanded='false', aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      #navbarsExampleDefault.collapse.navbar-collapse
+        ul.navbar-nav.mr-auto
+          li.nav-item
+            a.nav-link(href='/')
+              | Home 
+              span.sr-only (current)
+          li.nav-item.dropdown
+            a#dropdown01.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Categories
+            .dropdown-menu(aria-labelledby='dropdown01')
+              a.dropdown-item(href='/categories') All Categories
+              a.dropdown-item(href='/categories/economy') Economy
+              a.dropdown-item(href='/categories/politics') Politics
+              a.dropdown-item(href='/categories/culture') Culture
+              a.dropdown-item(href='/categories/sports') Sports
+              a.dropdown-item(href='/categories/other') Other
+          if user
+            li.nav-item.dropdown
+              a#dropdown01.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Add Items
+              .dropdown-menu(aria-labelledby='dropdown01')
+                a.dropdown-item(href='/articles/create') Add new article
+                a.dropdown-item(href='/comments/create') Add new comment
+                a.dropdown-item(href='/categories/create') Add new category
+          li.nav-item
+            a.nav-link(href='/users/help')
+              | Help 
+              span.sr-only (current)
+        form.form-inline.my-2.my-lg-0(action='/search')
+          input#search.form-control.mr-sm-2(type='text', placeholder='Search news', name='search', aria-label='Search')
+          button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search   
+        ul.navbar-nav.mr-right
+          if user
+            li.nav-item.dropdown
+              a#dropdown02.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') #{user.username}  
+              .dropdown-menu(aria-labelledby='dropdown02')
+                if user.email == ADMIN_EMAIL
+                  a.dropdown-item(href='/dashboard') Dashboard
+                a.dropdown-item(href='/users/account') Account
+                a.dropdown-item(href='/users/logout') Log Out
+          else
+            li.nav-item
+              a.nav-link(href='/users/register') Register
+            li.nav-item
+              a.nav-link(href='/users/login') Login
+    .container
+      != messages('message', locals)
+      if errors
+        each error, i in errors
+          div(class="alert alert-danger") #{error.msg}
+    div(class='container-fluid')
+      div(class='row')
+        div(class='col-sm-2')
+          block sidebar
+        div(class='col-sm-10')
+          br
+          block content
+          br
+          hr
+          footer
+            p Copyright &copy; 2020
+
+    script(src='https://code.jquery.com/jquery-3.5.1.slim.min.js', integrity='sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj', crossorigin='anonymous')
+    script(src='https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js', integrity='sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN', crossorigin='anonymous')
+    script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js', integrity='sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV', crossorigin='anonymous')

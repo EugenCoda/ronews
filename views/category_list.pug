@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h3= title
+  hr
+  .container
+    #unorderedList.ul
+      each category in category_list
+        li
+          a(href=category.url) #{category.name} 
+      else
+        li There are no categories yet. Add one 
+          | 
+          a(href='/categories/create') now.
