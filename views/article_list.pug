@@ -1,0 +1,131 @@
+extends layout
+
+block content
+  h3= title
+ 
+  table.table.table-sm.table-hover
+    thead.thead-light
+      tr
+        th(scope='col') Title 
+        th(scope='col') Author 
+        th(scope='col') Date Published 
+    tbody
+      - article_list.sort(function(a, b) {let textA = a.createdAt; let textB = b.createdAt; return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+      each article in article_list
+        tr
+          td
+            a(href=article.url) #{article.title} 
+          td 
+            a(href='#') #{article.createdBy.name} 
+          td #{moment(article.createdAt).format('MMM D, YYYY HH:mm')}
+      else
+        tr
+          th(scope='row') 
+          td There are no articles yet. Add one 
+            | 
+            a(href='/articles/create') now.
+          td
+  
+  //- Pagination component
+  nav(aria-label='Article list page')
+    //- There are more items in db than the ones showed on page
+    if article_count > pagination
+      ul.pagination
+        //- There are no more than 2 pages needed
+        if article_count <= (2 * pagination)
+          //- We are on page 1, disable "previous", enable "next" and manually index the 2 pages
+          if page == 1
+            li.page-item.disabled
+              a.page-link(href='articles', aria-label='Previous' tabindex="-1" aria-disabled="true")
+                span(aria-hidden='true') «
+            li.page-item.active(aria-current='page')
+              a.page-link(href=`articles?page=1&pagination=${pagination}`) 1
+                span.sr-only (current)
+            li.page-item
+              a.page-link(href=`articles?page=2&pagination=${pagination}`) 2
+            li.page-item
+              a.page-link(href=`articles?page=2&pagination=${pagination}`, aria-label='Next')
+                span(aria-hidden='true') »
+          //- We are on page 2, enable "previous", disable "next" and manually index the 2 pages
+          else
+            li.page-item
+              a.page-link(href=`articles?page=1&pagination=${pagination}`, aria-label='Previous')
+                span(aria-hidden='true') «
+            li.page-item
+              a.page-link(href=`articles?page=1&pagination=${pagination}`) 1
+            li.page-item.active(aria-current='page')
+              a.page-link(href=`articles?page=2&pagination=${pagination}`) 2
+                span.sr-only (current)
+            li.page-item.disabled
+              a.page-link(href='articles', aria-label='Next' tabindex="-1" aria-disabled="true")
+                span(aria-hidden='true') »
+        //- There are more than 2 pages needed
+        else
+          //- We are on page 1, disable "previous", enable "next", "last" and manually index the 3 pages
+          if page <= 1
+            li.page-item.disabled
+              a.page-link(href='articles', aria-label='Previous' tabindex="-1" aria-disabled="true")
+                span(aria-hidden='true') «
+            li.page-item.active(aria-current='page')
+              a.page-link(href=`articles?page=1&pagination=${pagination}`) 1
+                span.sr-only (current)
+            li.page-item
+              a.page-link(href=`articles?page=2&pagination=${pagination}`) 2
+            li.page-item
+              a.page-link(href=`articles?page=3&pagination=${pagination}`) 3
+            li.page-item
+              a.page-link(href=`articles?page=2&pagination=${pagination}`, aria-label='Next')
+                span(aria-hidden='true') »
+            if (Number.isInteger(article_count/pagination))
+              li.page-item
+                a.page-link(href=`articles?page=${Math.floor(article_count/pagination)}&pagination=${pagination}`, aria-label='Last')
+                  span(aria-hidden='true') Last »»
+            else
+              li.page-item
+                a.page-link(href=`articles?page=${Math.floor(article_count/pagination) + 1}&pagination=${pagination}`, aria-label='Last')
+                  span(aria-hidden='true') Last »»
+          else
+            //- We are on page 2 or more, enable "first", "previous", "next" and "last", index the 3 pages
+            if article_count > (page * pagination)
+              li.page-item
+                a.page-link(href=`articles?page=1&pagination=${pagination}`, aria-label='First')
+                  span(aria-hidden='true') «« First
+              li.page-item
+                a.page-link(href=`articles?page=${page-1}&pagination=${pagination}`, aria-label='Previous')
+                  span(aria-hidden='true') «
+              li.page-item
+                a.page-link(href=`articles?page=${page-1}&pagination=${pagination}`) #{page-1}  
+              li.page-item.active(aria-current='page')
+                a.page-link(href=`articles?page=${page}&pagination=${pagination}`) #{page}  
+                  span.sr-only (current)
+              li.page-item
+                a.page-link(href=`articles?page=${page+1}&pagination=${pagination}`) #{page+1}  
+              li.page-item
+                a.page-link(href=`articles?page=${page+1}&pagination=${pagination}`, aria-label='Next')
+                  span(aria-hidden='true') »
+              if (Number.isInteger(article_count/pagination))
+                li.page-item
+                  a.page-link(href=`articles?page=${Math.floor(article_count/pagination)}&pagination=${pagination}`, aria-label='Last')
+                    span(aria-hidden='true') Last »»
+              else
+                li.page-item
+                  a.page-link(href=`articles?page=${Math.floor(article_count/pagination) + 1}&pagination=${pagination}`, aria-label='Last')
+                    span(aria-hidden='true') Last »»
+            //- We are on the last page, enable "first" and "previous", disable "next", index the 3 pages starting from the last one
+            else
+              li.page-item
+                a.page-link(href=`articles?page=1&pagination=${pagination}`, aria-label='First')
+                  span(aria-hidden='true') «« First
+              li.page-item
+                a.page-link(href=`articles?page=${page-1}&pagination=${pagination}`, aria-label='Previous')
+                  span(aria-hidden='true') «
+              li.page-item
+                a.page-link(href=`articles?page=${page-2}&pagination=${pagination}`) #{page-2}  
+              li.page-item
+                a.page-link(href=`articles?page=${page-1}&pagination=${pagination}`) #{page-1}  
+              li.page-item.active(aria-current='page')
+                a.page-link(href=`articles?page=${page}&pagination=${pagination}`) #{page}  
+                  span.sr-only (current)
+              li.page-item.disabled
+                a.page-link(href='articles', aria-label='Next' tabindex="-1" aria-disabled="true")
+                  span(aria-hidden='true') »

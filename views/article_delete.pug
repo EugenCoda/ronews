@@ -1,0 +1,18 @@
+extends layout
+
+block content
+
+  h3 #{title}: #{article.title}
+
+  div.media
+
+    div.media-body
+      p Do you really want to delete this Article?
+      
+      form(method='POST' action='')
+        div.form-group
+          input#articleid.form-control(type='hidden',name='articleid', required='true', value=article._id )
+
+        button.btn.btn-danger.btn-sm(type='submit') Delete
+        | 
+        a.btn.btn-secondary.btn-sm(href=article.url) Cancel

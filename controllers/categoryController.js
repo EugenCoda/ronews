@@ -36,7 +36,7 @@ exports.category_detail = function (req, res, next) {
           .skip((page - 1) * pagination)
           .limit(pagination)
           .sort("title")
-          .populate("user")
+          .populate("createdBy")
           .exec(callback);
       },
       category_article_count: (callback) => {

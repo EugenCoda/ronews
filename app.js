@@ -12,6 +12,7 @@ const connectDB = require("./config/db");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
+var articlesRouter = require("./routes/articles");
 var categoriesRouter = require("./routes/categories");
 
 //Load config
@@ -30,6 +31,9 @@ app.set("view engine", "pug");
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
+
+//Moment - date formatting
+app.locals.moment = require("moment"); //for formatting the date in the pug template
 
 //Body Parser
 app.use(express.json());
@@ -72,6 +76,7 @@ app.get("*", (req, res, next) => {
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+app.use("/articles", articlesRouter);
 app.use("/categories", categoriesRouter);
 
 // catch 404 and forward to error handler

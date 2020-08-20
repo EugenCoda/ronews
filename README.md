@@ -4,7 +4,6 @@ Ro News
 
 - Created new express app skeleton
 - Added users & categories
+- Added articles
 
 TODO
-
-- category_detail - pagination update - in progress

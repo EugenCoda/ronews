@@ -17,9 +17,9 @@ var ArticleSchema = new Schema(
   }
 );
 
-// Virtual for book's URL
+// Virtual for article's URL
 ArticleSchema.virtual("url").get(function () {
-  return "/article/" + this._id;
+  return "/articles/" + this._id;
 });
 
 //Export model

@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  h3= title
+  form(method='POST', action='')
+    div.form-group
+      label(for='title') Title:
+      input#title.form-control(name='title', type='text' required='true' value=(undefined===article ? '' : article.title) )
+    div.form-group
+      label Category:
+      div
+        - categories.sort(function(a, b) {let textA = a.name.toUpperCase(); let textB = b.name.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+        for category in categories
+          div(style='display: inline; padding-right:10px;')
+            input.checkbox-input(type='checkbox', name='category', id=category._id, value=category._id, checked=category.checked )
+            label(for=category._id) 
+            | 
+            | #{category.name}
+    div.form-group
+      label(for='text') Text:
+      textarea#text.form-control(type='textarea' name='text' rows='3' required='true') #{undefined===article ? '' : article.text}
+    br
+    input.btn.btn-primary(type='submit', value='Submit')
+    | 
+    if article
+      a.btn.btn-secondary(href=article.url) Cancel
+    else
+      a.btn.btn-secondary(href='/articles') Cancel
