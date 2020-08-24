@@ -1,0 +1,40 @@
+extends layout
+
+block content
+  h3= title
+
+  table.table.table-sm.table-hover
+    thead.thead-light
+      tr
+        th(scope='col' width='250px') Category 
+        th(scope='col') isVerified 
+
+    tbody
+      - categories.sort(function(a, b) {let textA = a.name.toUpperCase(); let textB = b.name.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+      //- Loops through each category from the category list.
+      each category in categories
+
+        tr
+          
+          td
+            a(href=category.url) #{category.name} 
+
+          if category.isVerified
+            td Yes
+          else
+            td 
+              form(method='POST' action='')
+                div.form-group
+                  select#isVerified.form-control(type='select', name='isVerified' value=(undefined===category ? '' : category.isVerified)) 
+                    option(value="true" selected=(category.isVerified) ? 'selected' : false) Yes
+                    option(value="false" selected=(!category.isVerified) ? 'selected' : false) No
+                  label(for='categoryId')
+                  input#categoryId.form-control(type='hidden' name='categoryId' required='true' value=category._id)
+                button.btn.btn-primary(type='submit') Submit
+      else
+        tr
+          td There are no categories pending approval
+          td
+
+    
+  a.btn.btn-secondary(href='/dashboard') Go back to Dashboard

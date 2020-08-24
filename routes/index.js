@@ -1,9 +1,12 @@
 var express = require("express");
 var router = express.Router();
 
-/* GET home page. */
-router.get("/", function (req, res, next) {
-  res.render("index", { title: "Ro News" });
-});
+// Require controller modules.
+var index_controller = require("../controllers/indexController");
+
+/// HOME PAGE ROUTES ///
+
+/* GET main page. */
+router.get("/", index_controller.main_page);
 
 module.exports = router;

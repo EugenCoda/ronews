@@ -4,6 +4,7 @@ body {
   background: #e1e1e1;
   margin: 8px;
   display: block;
+  line-height: 1.6;
 }
 
 .alert-error {
@@ -29,6 +30,22 @@ body {
 #dropdown02 {
   width: 130px;
   text-align: center;
+}
+
+/* Article images */
+#article_img {
+  margin-right: 15px;
+  border-radius: 3px;
+  width: 100%;
+}
+
+a {
+  color: #0f4476;
+}
+
+a#article_title {
+  text-decoration: none;
+  font-size: 32px;
 }
 
 /* For category lists - to be shown in 3 columns */

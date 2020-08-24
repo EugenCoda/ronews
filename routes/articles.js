@@ -18,19 +18,27 @@ router.get(
 router.post("/create", article_controller.article_create_post);
 
 // GET request to delete Article.
-router.get("/:id/delete", ensureAdmin, article_controller.article_delete_get);
+router.get(
+  "/:id/:slug/delete",
+  ensureAdmin,
+  article_controller.article_delete_get
+);
 
 // POST request to delete Article.
-router.post("/:id/delete", article_controller.article_delete_post);
+router.post("/:id/:slug/delete", article_controller.article_delete_post);
 
 // GET request to update Article.
-router.get("/:id/update", ensureAdmin, article_controller.article_update_get);
+router.get(
+  "/:id/:slug/update",
+  ensureAdmin,
+  article_controller.article_update_get
+);
 
 // POST request to update Article.
-router.post("/:id/update", article_controller.article_update_post);
+router.post("/:id/:slug/update", article_controller.article_update_post);
 
 // GET request for one Article.
-router.get("/:id", article_controller.article_detail);
+router.get("/:id/:slug", article_controller.article_detail);
 
 // GET request for list of all Articles.
 router.get("/", article_controller.article_list);

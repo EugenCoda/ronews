@@ -1,4 +1,6 @@
 var mongoose = require("mongoose");
+var slug = require("mongoose-slug-generator");
+mongoose.plugin(slug);
 
 var Schema = mongoose.Schema;
 
@@ -8,6 +10,7 @@ var CategorySchema = new Schema(
     createdBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
     updatedBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
     isVerified: { type: Boolean, default: false },
+    slug: { type: String, slug: "name", unique: true },
   },
   {
     timestamps: true,
@@ -16,7 +19,7 @@ var CategorySchema = new Schema(
 
 // Virtual for genre's URL
 CategorySchema.virtual("url").get(function () {
-  return "/categories/" + this._id;
+  return "/categories/" + this._id + "/" + this.slug;
 });
 
 //Export model

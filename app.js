@@ -14,6 +14,7 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var articlesRouter = require("./routes/articles");
 var categoriesRouter = require("./routes/categories");
+var adminRouter = require("./routes/admin");
 
 //Load config
 dotenv.config({ path: "./config/config.env" });
@@ -78,6 +79,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/articles", articlesRouter);
 app.use("/categories", categoriesRouter);
+app.use("/dashboard", adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

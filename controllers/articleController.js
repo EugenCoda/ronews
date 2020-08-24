@@ -76,15 +76,13 @@ exports.article_create_post = [
   // Validate that the name field is not empty.
   body("title", "Article title required").trim().isLength({ min: 1 }),
   body("text", "Text required").trim().isLength({ min: 1 }),
-  body("category").trim().optional(),
 
   // Sanitize (escape) the name field.
   body("title").escape(),
   body("text").escape(),
-  body("category").escape(),
+  body("category.*").escape(), //for the values within category array
   body("title").unescape(), //not sure if it is safe to do so
   body("text").unescape(), //not sure if it is safe to do so
-  body("category").unescape(), //not sure if it is safe to do so
 
   // Process request after validation and sanitization.
   (req, res, next) => {
@@ -274,22 +272,20 @@ exports.article_update_post = [
   // Validate fields.
   body("title", "Article title required").trim().isLength({ min: 1 }),
   body("text", "Text required").trim().isLength({ min: 1 }),
-  body("category").trim().optional(),
 
   // Sanitize fields(no wildcard used, it seems to affect genre array)
   body("title").escape(),
   body("text").escape(),
-  body("category").escape(),
+  body("category.*").escape(), //for the values within category array
   body("title").unescape(), //not sure if it is safe to do so
   body("text").unescape(), //not sure if it is safe to do so
-  body("category").unescape(), //not sure if it is safe to do so
 
   // Process request after validation and sanitization.
   (req, res, next) => {
     // Extract the validation errors from a request.
     const errors = validationResult(req);
-    console.log(req.params.id);
-    // Create a category object with escaped and trimmed data.
+
+    // Create an article object with escaped and trimmed data.
     var article = new Article({
       title: req.body.title,
       text: req.body.text,
@@ -371,7 +367,10 @@ exports.article_detail = function (req, res, next) {
   async.parallel(
     {
       article: function (callback) {
-        Article.findById(req.params.id).populate("createdBy").exec(callback);
+        Article.findById(req.params.id)
+          .populate("createdBy")
+          .populate("category")
+          .exec(callback);
       },
     },
     function (err, results) {

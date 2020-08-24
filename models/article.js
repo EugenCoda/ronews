@@ -1,4 +1,6 @@
 var mongoose = require("mongoose");
+var slug = require("mongoose-slug-generator");
+mongoose.plugin(slug);
 
 var Schema = mongoose.Schema;
 
@@ -11,6 +13,7 @@ var ArticleSchema = new Schema(
     createdBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
     updatedBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
     isVerified: { type: Boolean, default: false },
+    slug: { type: String, slug: "title", unique: true },
   },
   {
     timestamps: true,
@@ -19,7 +22,7 @@ var ArticleSchema = new Schema(
 
 // Virtual for article's URL
 ArticleSchema.virtual("url").get(function () {
-  return "/articles/" + this._id;
+  return "/articles/" + this._id + "/" + this.slug;
 });
 
 //Export model

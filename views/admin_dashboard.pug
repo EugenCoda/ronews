@@ -1,0 +1,33 @@
+extends layout
+
+block content
+  h3= title
+
+  table.table.table-sm.table-hover
+    thead.thead-light
+      tr
+        th(scope='col') Type 
+        th(scope='col') Approved
+        th(scope='col') Pending
+        th(scope='col') Total
+
+    tbody
+      tr
+        td #[strong Articles:] 
+        td !{data.article_count_approved}
+        td 
+          a(href='/dashboard/articles') !{data.article_count_pending}
+        td !{data.article_count}
+      tr
+        td #[strong Categories:] 
+        td !{data.category_count_approved}
+        td 
+          a(href='/dashboard/categories') !{data.category_count_pending}
+        td !{data.category_count}
+      tr
+        td #[strong Comments:] 
+        td !{data.comment_count_approved}
+        td 
+          a(href='/dashboard/comments') !{data.comment_count_pending}
+        td !{data.comment_count}
+      

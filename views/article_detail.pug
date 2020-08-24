@@ -2,9 +2,17 @@ extends layout
 
 block content
   h1= article.title
-  h6 Written by #{article.createdBy.name}
+  h6 #{article.createdBy.name} - #{moment(article.createdAt).format('MMM D, YYYY HH:mm')}
+  p #[strong Category:]&nbsp;
+    each val, index in article.category
+      a(href=val.url) #{val.name}
+      if index < article.category.length - 1
+        |, 
   hr
-  p!= article.text
+  div
+    img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
+  div
+    p!= article.text
   hr
   if user
     if user.email == article.createdBy.email
