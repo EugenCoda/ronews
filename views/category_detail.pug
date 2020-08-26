@@ -2,33 +2,51 @@ extends layout
 
 block content
 
-  h3 #{category.name}
-  
-  div(style='margin-left:20px;margin-top:20px')
-
-    table.table.table-sm.table-hover
-      thead.thead-light
-        tr
-          th(scope='col') Title 
-          th(scope='col') Author 
-          th(scope='col') Date Published 
-      tbody
-        - category_articles.sort(function(a, b) {let textA = a.title.toUpperCase(); let textB = b.title.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
-        each article in category_articles
-          tr
-            td
-              a(href=article.url) #{article.title} 
-            td 
-              a(href='#') #{article.createdBy.name} 
-            td #{moment(article.createdAt).format('MMM D, YYYY HH:mm')}
-        else
-          tr
-            th(scope='row') 
-            td This category has no articles yet. Add one 
-              | 
-              a(href='/articles/create') now.
-            td
+  include helpers
     
+  h3 #{category.name}
+  hr
+  - category_articles.sort(function(a, b) {let textA = a.createdAt; let textB = b.createdAt; return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
+  - let i = 0;
+  each article in category_articles
+    if i == 0
+      article.article-lg
+        figure.article-thumb
+          a(href=article.url)
+            img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
+        each val, index in article.category
+          a.article-tag(href=val.url) #{val.name}
+          if index < article.category.length - 1
+            |  
+        h2 
+          a.article_title(href=article.url) #{article.title}
+        div
+          p(style='display:inline') !{truncate(article.text, 300)} 
+            |
+            a(href=article.url) ...more
+    else
+      article.article-md
+        .container-fluid
+          .row  
+            .col-md-6
+              figure.article-thumb
+                a(href=article.url)
+                  img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
+            .col-md-6
+              div.article-content
+                each val, index in article.category
+                  a.article-tag(href=val.url) #{val.name}
+                  if index < article.category.length - 1
+                    |  
+                h5 
+                  a.article_title(href=article.url) #{article.title}
+                div
+                  p(style='display:inline') !{truncate(article.text, 150)} 
+                p Published #{moment(article.createdAt).fromNow()}
+          
+    - i++;
+    br
+
     //- Pagination component
     nav(aria-label='Category detail page')
       //- There are more items in db than the ones showed on page
@@ -133,8 +151,8 @@ block content
                   a.page-link(href=`${category._id}`, aria-label='Next' tabindex="-1" aria-disabled="true")
                     span(aria-hidden='true') »
 
-  hr
   if user
+    hr
     if user.email==ADMIN_EMAIL
       a.btn.btn-dark(href=category.url+'/update') Update category
       | 

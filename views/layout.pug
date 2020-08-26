@@ -16,37 +16,47 @@ html(lang='en')
         #navbarsExampleDefault.collapse.navbar-collapse
           ul.navbar-nav.mr-auto
             li.nav-item
-              a.nav-link(href='/')
-                | Home 
+              a.nav-link(href=`/categories/${BUSINESS}/business`)
+                | Business 
+                span.sr-only (current)
+            li.nav-item
+              a.nav-link(href=`/categories/${POLITICS}/politics`)
+                | Politics 
+                span.sr-only (current)
+            li.nav-item
+              a.nav-link(href=`/categories/${EDUCATION}/education`)
+                | Education 
+                span.sr-only (current)
+            li.nav-item
+              a.nav-link(href=`/categories/${HEALTH}/health`)
+                | Health 
+                span.sr-only (current)
+            li.nav-item
+              a.nav-link(href=`/categories/${SPORTS}/sports`)
+                | Sports 
                 span.sr-only (current)
             li.nav-item.dropdown
-              a#dropdown01.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Categories
+              a#dropdown01.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Other
               .dropdown-menu(aria-labelledby='dropdown01')
                 a.dropdown-item(href='/categories') All Categories
-                a.dropdown-item(href=`/categories/${BUSINESS}/business`) Business
-                a.dropdown-item(href=`/categories/${POLITICS}/politics`) Politics
-                a.dropdown-item(href=`/categories/${SPORTS}/sports`) Sports
-                a.dropdown-item(href=`/categories/${EDUCATION}/education`) Education
-            li.nav-item.dropdown
-              a#dropdown01.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Articles
-              .dropdown-menu(aria-labelledby='dropdown01')
-                a.dropdown-item(href='/articles') All Articles
+                a.dropdown-item(href=`/categories/${CORONAVIRUS}/coronavirus`) Coronavirus
             if user
+              li.nav-item.dropdown
+                a#dropdown01.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Articles
+                .dropdown-menu(aria-labelledby='dropdown01')
+                  a.dropdown-item(href='/articles') All Articles
               li.nav-item.dropdown
                 a#dropdown01.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Add Items
                 .dropdown-menu(aria-labelledby='dropdown01')
                   a.dropdown-item(href='/articles/create') Add new article
                   a.dropdown-item(href='/comments/create') Add new comment
                   a.dropdown-item(href='/categories/create') Add new category
-            li.nav-item
-              a.nav-link(href='/users/help')
-                | Help 
-                span.sr-only (current)
-          form.form-inline.my-2.my-lg-0(action='/search')
-            input#search.form-control.mr-sm-2(type='text', placeholder='Search news', name='search', aria-label='Search')
-            button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search   
           ul.navbar-nav.mr-right
             if user
+              li.nav-item
+                a.nav-link(href='/users/help')
+                  | Help 
+                  span.sr-only (current
               li.nav-item.dropdown
                 a#dropdown02.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') #{user.username}  
                 .dropdown-menu(aria-labelledby='dropdown02')
@@ -55,6 +65,10 @@ html(lang='en')
                   a.dropdown-item(href='/users/account') Account
                   a.dropdown-item(href='/users/logout') Log Out
             else
+              li.nav-item
+                a.nav-link(href='/users/help')
+                  | Help 
+                  span.sr-only (current)
               li.nav-item
                 a.nav-link(href='/users/register') Register
               li.nav-item

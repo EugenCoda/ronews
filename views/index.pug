@@ -1,44 +1,85 @@
 extends layout
 
 block content
-
+ 
   include helpers
 
   - article_last.sort(function(a, b) {let textA = a.createdAt; let textB = b.createdAt; return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
   - let i = 0;
   each article in article_last
     if i == 0
-      div
-        a(href=article.url)
-          img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
-      h1 
-        a#article_title(href=article.url) #{article.title}
-      h6 #{article.createdBy.name} - #{moment(article.createdAt).format('MMM D, YYYY HH:mm')}
-      |
-      p
+      article.article-lg
+        figure.article-thumb
+          a(href=article.url)
+            img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
         each val, index in article.category
-          a(href=val.url) #{val.name}
+          a.article-tag(href=val.url) #{val.name}
           if index < article.category.length - 1
-            |, 
-      div
-        p(style='display:inline') !{truncate(article.text, 400)} 
-          |
-          a(href=article.url) ...more
+            |  
+        h2 
+          a.article_title(href=article.url) #{article.title}
+        div
+          p(style='display:inline') !{truncate(article.text, 300)} 
+            |
+            a(href=article.url) ...more
     else
-      div
-        a(href=article.url)
-          img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
-      h1 
-        a#article_title(href=article.url) #{article.title}
-      h6 #{article.createdBy.name} - #{moment(article.createdAt).format('MMM D, YYYY HH:mm')}
-      |
-      p
-        each val, index in article.category
-          a(href=val.url) #{val.name}
-          if index < article.category.length - 1
-            |, 
+      article.article-md
+        .container-fluid
+          .row  
+            .col-md-6
+              figure.article-thumb
+                a(href=article.url)
+                  img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
+            .col-md-6
+              div.article-content
+                each val, index in article.category
+                  a.article-tag(href=val.url) #{val.name}
+                  if index < article.category.length - 1
+                    |  
+                h5 
+                  a.article_title(href=article.url) #{article.title}
+                div
+                  p(style='display:inline') !{truncate(article.text, 150)} 
+                p Published #{moment(article.createdAt).fromNow()}
+          
     - i++;
-    hr
+    br
+
+block right-sidebar
+
+  .container-fluid
+    .row.search-box 
+      form.form-inline.my-2.my-lg-0(action='#')
+        input#search.form-control.mr-sm-2(type='text', placeholder='Search news', name='search', aria-label='Search')
+        button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search   
+  .container-fluid
+    .row
+      .sidebar-article
+        
+        hr
+        dataset(xmlns='http://www.bnr.ro/xsd', xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance', xsi:schemalocation='http://www.bnr.ro/xsd nbrfxrates.xsd')
+          header
+            publisher National Bank of Romania
+            br
+            publishingdate 2020-08-26
+            br
+          subject Exchange Rate for RON
+          br
+          cube(date='2020-08-26')
+            rate(currency='EUR') 1 EUR = 4.8404
+            br 
+            rate(currency='USD') 1 USD = 4.0968
+            br 
+            rate(currency='GBP') 1 GBP = 5.3863
+            br
+            rate(currency='MDL') 1 MDL = 0.2462
+            br
+            rate(currency='PLN') 1 PLN = 1.0987
+
+
+
+
+      
 
   //- Pagination component
   nav(aria-label='Main page')
@@ -143,3 +184,4 @@ block content
               li.page-item.disabled
                 a.page-link(href='/', aria-label='Next' tabindex="-1" aria-disabled="true")
                   span(aria-hidden='true') »
+    
