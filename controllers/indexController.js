@@ -4,33 +4,14 @@ var Comment = require("../models/comment");
 var User = require("../models/user");
 var async = require("async");
 const { body, validationResult } = require("express-validator");
-// const fetch = require("node-fetch");
-// const convert = require("xml-js");
+const fetch = require("node-fetch");
+const convert = require("xml-js");
+//const { response } = require("express");
 
 // Display main page.
 exports.main_page = function (req, res, next) {
   const pagination = req.query.pagination ? parseInt(req.query.pagination) : 10;
   const page = req.query.page ? parseInt(req.query.page) : 1;
-
-  // let dataAsJson = {};
-  // fetch("https://www.bnr.ro/nbrfxrates.xml")
-  //   .then((response) => response.text())
-  //   .then((str) => {
-  //     dataAsJson = JSON.parse(convert.xml2json(str));
-  //   })
-  //   .then(() => {
-  //     console.log(
-  //       dataAsJson.elements[0].elements[0].elements[1].elements[0].text
-  //     );
-
-  // console.log(dataAsJson.elements[0].elements[1].elements[2].elements[10]);
-  // console.log(dataAsJson.elements[0].elements[1].elements[2].elements[11]);
-  // console.log(dataAsJson.elements[0].elements[1].elements[2].elements[17]);
-  // console.log(dataAsJson.elements[0].elements[1].elements[2].elements[21]);
-  // console.log(dataAsJson.elements[0].elements[1].elements[2].elements[28]);
-  // })
-
-  // .catch((err) => console.error(err));
 
   async.parallel(
     {
@@ -64,6 +45,77 @@ exports.main_page = function (req, res, next) {
         pagination: pagination,
         article_last: results.article_last,
         article_count: results.article_count,
+      });
+    }
+  );
+};
+
+// Display exchange rate.
+// Data is fetched from the BNR website as XML, then converted to JSON
+exports.exchange_rate = function (req, res, next) {
+  let dataAsJson = {};
+  fetch("https://www.bnr.ro/nbrfxrates.xml")
+    .then((response) => response.text())
+    .then((str) => {
+      dataAsJson = JSON.parse(convert.xml2json(str));
+    })
+    .then(() => {
+      res.json(dataAsJson);
+    })
+    .catch((err) => console.error(err));
+};
+
+// Display search results on GET.
+exports.search = (req, res, next) => {
+  var search = req.query.search;
+
+  if (search == "") {
+    // Cannot perform the seach with empty string.
+    req.flash("danger", "Please enter some text to perform a search.");
+    res.redirect("/");
+    return;
+  }
+  async.parallel(
+    {
+      articles: (callback) => {
+        // For an unknown reason, I cannot create a text index in MongoDB Atlas for articles,
+        // so I created an Atlas Search Index, which works with aggregate
+        Article.aggregate([
+          {
+            $search: {
+              text: {
+                query: search,
+                path: ["title", "text", "category"],
+              },
+            },
+          },
+          // Show the item only if it's approved by admin.
+          // TODO: or if it was created by the logged user (didn't manage to make it work with aggregate)
+          { $match: { isVerified: true } },
+          {
+            $limit: 5,
+          },
+          {
+            $project: {
+              _id: 1,
+              title: 1,
+              text: 1,
+              category: 1,
+              slug: 1,
+            },
+          },
+        ]).exec(callback);
+      },
+    },
+
+    (err, results) => {
+      if (err) {
+        return next(err);
+      }
+
+      res.render("search", {
+        title: "Search Results",
+        articles: results.articles,
       });
     }
   );

@@ -11,53 +11,51 @@ html(lang='en')
     div.app_body
       nav.navbar.navbar-expand-md.navbar-dark(style='background-color: #0f4476;border-radius: 3px;')
         a.navbar-brand(href='/') Ro News
-        button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarsExampleDefault', aria-controls='navbarsExampleDefault', aria-expanded='false', aria-label='Toggle navigation')
+        button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbar-menu', aria-controls='navbar-menu', aria-expanded='false', aria-label='Toggle navigation')
           span.navbar-toggler-icon
-        #navbarsExampleDefault.collapse.navbar-collapse
+        #navbar-menu.collapse.navbar-collapse
           ul.navbar-nav.mr-auto
-            li.nav-item
+            li.nav-item.active
               a.nav-link(href=`/categories/${BUSINESS}/business`)
                 | Business 
                 span.sr-only (current)
-            li.nav-item
+            li.nav-item.active
               a.nav-link(href=`/categories/${POLITICS}/politics`)
                 | Politics 
                 span.sr-only (current)
-            li.nav-item
+            li.nav-item.active
               a.nav-link(href=`/categories/${EDUCATION}/education`)
                 | Education 
                 span.sr-only (current)
-            li.nav-item
+            li.nav-item.active
               a.nav-link(href=`/categories/${HEALTH}/health`)
                 | Health 
                 span.sr-only (current)
-            li.nav-item
+            li.nav-item.active
               a.nav-link(href=`/categories/${SPORTS}/sports`)
                 | Sports 
                 span.sr-only (current)
-            li.nav-item.dropdown
+            li.nav-item.dropdown.active
               a#dropdown01.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Other
               .dropdown-menu(aria-labelledby='dropdown01')
                 a.dropdown-item(href='/categories') All Categories
                 a.dropdown-item(href=`/categories/${CORONAVIRUS}/coronavirus`) Coronavirus
+          ul.navbar-nav.mr-right
+            form.form-inline.my-2.my-lg-0(action='/search')
+              input#search.form-control.mr-sm-2(type='text', placeholder='Search news', name='search', aria-label='Search')
+              button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search   
             if user
-              li.nav-item.dropdown
-                a#dropdown01.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Articles
-                .dropdown-menu(aria-labelledby='dropdown01')
-                  a.dropdown-item(href='/articles') All Articles
-              li.nav-item.dropdown
+              li.nav-item.active
+                a.nav-link(href='/users/help')
+                  | Help 
+                  span.sr-only (current
+              li.nav-item.dropdown.active
                 a#dropdown01.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Add Items
                 .dropdown-menu(aria-labelledby='dropdown01')
                   a.dropdown-item(href='/articles/create') Add new article
                   a.dropdown-item(href='/comments/create') Add new comment
                   a.dropdown-item(href='/categories/create') Add new category
-          ul.navbar-nav.mr-right
-            if user
-              li.nav-item
-                a.nav-link(href='/users/help')
-                  | Help 
-                  span.sr-only (current
-              li.nav-item.dropdown
+              li.nav-item.dropdown.active
                 a#dropdown02.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') #{user.username}  
                 .dropdown-menu(aria-labelledby='dropdown02')
                   if user.email == ADMIN_EMAIL
@@ -65,23 +63,23 @@ html(lang='en')
                   a.dropdown-item(href='/users/account') Account
                   a.dropdown-item(href='/users/logout') Log Out
             else
-              li.nav-item
+              li.nav-item.active
                 a.nav-link(href='/users/help')
                   | Help 
                   span.sr-only (current)
-              li.nav-item
+              li.nav-item.active
                 a.nav-link(href='/users/register') Register
-              li.nav-item
+              li.nav-item.active
                 a.nav-link(href='/users/login') Login
-      .container
-        != messages('message', locals)
-        if errors
-          each error, i in errors
-            div(class="alert alert-danger") #{error.msg}
+
       div(class='container-fluid')
         div(class='row')
           div(class='col-sm-8')
             br
+            != messages('message', locals)
+            if errors
+              each error, i in errors
+                div(class="alert alert-danger") #{error.msg}
             block content
             br
           div(class='col-sm-4')

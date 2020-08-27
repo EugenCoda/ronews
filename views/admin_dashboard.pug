@@ -14,13 +14,15 @@ block content
     tbody
       tr
         td #[strong Articles:] 
-        td !{data.article_count_approved}
+        td 
+          a(href='/articles') !{data.article_count_approved}
         td 
           a(href='/dashboard/articles') !{data.article_count_pending}
         td !{data.article_count}
       tr
         td #[strong Categories:] 
-        td !{data.category_count_approved}
+        td 
+          a(href='/categories') !{data.category_count_approved}
         td 
           a(href='/dashboard/categories') !{data.category_count_pending}
         td !{data.category_count}

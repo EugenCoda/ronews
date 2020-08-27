@@ -48,38 +48,26 @@ block content
 block right-sidebar
 
   .container-fluid
-    .row.search-box 
-      form.form-inline.my-2.my-lg-0(action='#')
-        input#search.form-control.mr-sm-2(type='text', placeholder='Search news', name='search', aria-label='Search')
-        button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search   
-  .container-fluid
     .row
+      .exchange_rate
+        br
+        h6.article_title Exchange Rate for RON
+        p#publishingdate Date:     
+        table.table.table-borderless.table-sm 
+          tbody
+            tr
+              td#EUR 1 EUR = 
+            tr
+              td#USD 1 USD = 
+            tr
+              td#GBP 1 GBP = 
+            tr
+              td#MDL 1 MDL = 
+            tr
+              td#PLN 1 PLN = 
+                
       .sidebar-article
-        
-        hr
-        dataset(xmlns='http://www.bnr.ro/xsd', xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance', xsi:schemalocation='http://www.bnr.ro/xsd nbrfxrates.xsd')
-          header
-            publisher National Bank of Romania
-            br
-            publishingdate 2020-08-26
-            br
-          subject Exchange Rate for RON
-          br
-          cube(date='2020-08-26')
-            rate(currency='EUR') 1 EUR = 4.8404
-            br 
-            rate(currency='USD') 1 USD = 4.0968
-            br 
-            rate(currency='GBP') 1 GBP = 5.3863
-            br
-            rate(currency='MDL') 1 MDL = 0.2462
-            br
-            rate(currency='PLN') 1 PLN = 1.0987
-
-
-
-
-      
+        h6.article_title Recommended Articles
 
   //- Pagination component
   nav(aria-label='Main page')
@@ -184,4 +172,24 @@ block right-sidebar
               li.page-item.disabled
                 a.page-link(href='/', aria-label='Next' tabindex="-1" aria-disabled="true")
                   span(aria-hidden='true') »
-    
+  
+  //- Display Exchange Rate
+  //- Due to CORS issue, cannot fetch directly to front end, so first it is fetched to backend, then here
+  script.
+    window.addEventListener('DOMContentLoaded', (event) => {
+      //console.log('DOM fully loaded and parsed');
+      function getExchangeRate(){fetch("exchange")
+        .then((response) => {return response.json()})
+        .then(function(data) {
+          let exchange_rate = data;
+          document.getElementById('publishingdate').textContent += exchange_rate.elements[0].elements[0].elements[1].elements[0].text;
+          document.getElementById('EUR').textContent += exchange_rate.elements[0].elements[1].elements[2].elements[10].elements[0].text
+          document.getElementById('GBP').textContent += exchange_rate.elements[0].elements[1].elements[2].elements[11].elements[0].text;
+          document.getElementById('MDL').textContent += exchange_rate.elements[0].elements[1].elements[2].elements[17].elements[0].text;
+          document.getElementById('PLN').textContent += exchange_rate.elements[0].elements[1].elements[2].elements[21].elements[0].text;
+          document.getElementById('USD').textContent += exchange_rate.elements[0].elements[1].elements[2].elements[28].elements[0].text;
+        })
+        .catch((err) => console.error(err));
+      };
+      getExchangeRate();
+    });

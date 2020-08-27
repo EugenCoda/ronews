@@ -8,8 +8,15 @@ Ro News
 - Added admin dashboard
 - Fixed adding multiple categories to an article
 - Added slug urls
+- Added exchange rate from BNR
 
 TODO
 
-- search
+- search - in progress (search for category + pagination)
 - comments section
+- option to mark as "recommended"
+- newsletter
+- social media
+- website domain
+- deploy
+- google analytics

@@ -13,7 +13,7 @@ body {
   border-color: #ebccd1;
 }
 
-.alert-success_msg {
+.alert-success {
   color: #3c763d;
   background-color: #dff0d8;
   border-color: #d6e9c6;
@@ -115,9 +115,19 @@ a:hover {
 }
 
 .search-box {
-  margin: 20px;
+  margin: 0;
+  margin-top: 30px;
 }
 
 .sidebar-article {
   margin: 20px;
+}
+
+.exchange_rate {
+  margin: 20px;
+}
+
+.exchange_rate p,
+td {
+  font-size: 14px;
 }
