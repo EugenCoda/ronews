@@ -6,7 +6,7 @@ var async = require("async");
 const { body, validationResult } = require("express-validator");
 const fetch = require("node-fetch");
 const convert = require("xml-js");
-//const { response } = require("express");
+//const { response } = require("express"); - cum a ajuns asta aici?
 
 // Display main page.
 exports.main_page = function (req, res, next) {
