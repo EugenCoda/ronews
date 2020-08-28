@@ -24,7 +24,9 @@ block content
                   br
                   p(style='display:inline') #{truncate(article.text, 250)} 
                   |
-                  a(href=href=article.url title=article.text) ...more
+                  a(href=article.url title=article.text) ...more
+        br
+        a.btn.btn-secondary(href='/categories') Back to categories
       else
         p Do you really want to delete this Category?
         

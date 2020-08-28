@@ -106,6 +106,33 @@ exports.search = (req, res, next) => {
           },
         ]).exec(callback);
       },
+      categories: (callback) => {
+        // For an unknown reason, I cannot create a text index in MongoDB Atlas for categories,
+        // so I created an Atlas Search Index, which works with aggregate
+        Category.aggregate([
+          {
+            $search: {
+              text: {
+                query: search,
+                path: ["name"],
+              },
+            },
+          },
+          // Show the item only if it's approved by admin.
+          // TODO: or if it was created by the logged user (didn't manage to make it work with aggregate)
+          { $match: { isVerified: true } },
+          {
+            $limit: 5,
+          },
+          {
+            $project: {
+              _id: 1,
+              name: 1,
+              slug: 1,
+            },
+          },
+        ]).exec(callback);
+      },
     },
 
     (err, results) => {
@@ -116,6 +143,7 @@ exports.search = (req, res, next) => {
       res.render("search", {
         title: "Search Results",
         articles: results.articles,
+        categories: results.categories,
       });
     }
   );

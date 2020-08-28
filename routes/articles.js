@@ -8,11 +8,7 @@ var article_controller = require("../controllers/articleController");
 /// ARTICLE ROUTES ///
 
 // GET request for creating an Article. NOTE This must come before route that displays Article (uses id).
-router.get(
-  "/create",
-  ensureAuthenticated,
-  article_controller.article_create_get
-);
+router.get("/create", ensureAdmin, article_controller.article_create_get);
 
 //POST request for creating Article.
 router.post("/create", article_controller.article_create_post);
@@ -41,6 +37,6 @@ router.post("/:id/:slug/update", article_controller.article_update_post);
 router.get("/:id/:slug", article_controller.article_detail);
 
 // GET request for list of all Articles.
-router.get("/", article_controller.article_list);
+router.get("/", ensureAdmin, article_controller.article_list);
 
 module.exports = router;

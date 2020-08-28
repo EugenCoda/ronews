@@ -1,18 +1,27 @@
 doctype html
 html(lang='en')
+  
   head
     title= title
     meta(charset='utf-8')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css', integrity='sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z', crossorigin='anonymous')
     link(rel='stylesheet', href='/stylesheets/style.css')
+  
   body
+
     include layout_ignore
-    div.app_body
-      nav.navbar.navbar-expand-md.navbar-dark(style='background-color: #0f4476;border-radius: 3px;')
+    
+    .app_body
+
+      //- Navbar
+      nav.navbar.navbar-expand-md.navbar-dark
         a.navbar-brand(href='/') Ro News
+        
+        //- Hamburger menu icon
         button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbar-menu', aria-controls='navbar-menu', aria-expanded='false', aria-label='Toggle navigation')
           span.navbar-toggler-icon
+        
         #navbar-menu.collapse.navbar-collapse
           ul.navbar-nav.mr-auto
             li.nav-item.active
@@ -38,23 +47,20 @@ html(lang='en')
             li.nav-item.dropdown.active
               a#dropdown01.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Other
               .dropdown-menu(aria-labelledby='dropdown01')
-                a.dropdown-item(href='/categories') All Categories
                 a.dropdown-item(href=`/categories/${CORONAVIRUS}/coronavirus`) Coronavirus
           ul.navbar-nav.mr-right
+
+            //- Search form
             form.form-inline.my-2.my-lg-0(action='/search')
               input#search.form-control.mr-sm-2(type='text', placeholder='Search news', name='search', aria-label='Search')
-              button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search   
+              button.btn.btn-info.my-2.my-sm-0(type='submit') Search   
+    
+            li.nav-item.active
+              a.nav-link(href='/users/help')
+                | Help 
+                span.sr-only (current
+              
             if user
-              li.nav-item.active
-                a.nav-link(href='/users/help')
-                  | Help 
-                  span.sr-only (current
-              li.nav-item.dropdown.active
-                a#dropdown01.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Add Items
-                .dropdown-menu(aria-labelledby='dropdown01')
-                  a.dropdown-item(href='/articles/create') Add new article
-                  a.dropdown-item(href='/comments/create') Add new comment
-                  a.dropdown-item(href='/categories/create') Add new category
               li.nav-item.dropdown.active
                 a#dropdown02.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') #{user.username}  
                 .dropdown-menu(aria-labelledby='dropdown02')
@@ -64,11 +70,8 @@ html(lang='en')
                   a.dropdown-item(href='/users/logout') Log Out
             else
               li.nav-item.active
-                a.nav-link(href='/users/help')
-                  | Help 
-                  span.sr-only (current)
-              li.nav-item.active
                 a.nav-link(href='/users/register') Register
+              
               li.nav-item.active
                 a.nav-link(href='/users/login') Login
 

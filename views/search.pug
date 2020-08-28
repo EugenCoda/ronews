@@ -15,5 +15,12 @@ block content
               figure.article-thumb
                 a(href=`/articles/${article._id}/${article.slug}`)
                   img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
+      each category in categories
+              .col-md-4  
+                .row-md-6
+                  div.article-content
+                    h6 
+                      a.article_title(href=`/categories/${category._id}/${category.slug}`) #{category.name}
+                     
   
   //- TODO - pagination

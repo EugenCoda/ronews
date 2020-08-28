@@ -19,10 +19,7 @@ body {
   border-color: #d6e9c6;
 }
 
-#tokenResend,
-#btnAddAuthor,
-#btnChangeAuthor,
-#btnRemoveAuthor {
+#tokenResend {
   font-size: small;
 }
 
@@ -53,6 +50,11 @@ body {
   margin: auto;
   display: block;
   clear: both;
+}
+
+.navbar {
+  background-color: #0f4476;
+  border-radius: 3px;
 }
 
 .footer {
@@ -130,4 +132,14 @@ a:hover {
 .exchange_rate p,
 td {
   font-size: 14px;
+}
+
+/* Add, edit and delete articles */
+.bi-plus-circle-fill,
+.bi-pencil,
+.bi-x-circle-fill {
+  width: 1.3em;
+  height: 1.3em;
+  margin-right: 5px;
+  margin-left: 5px;
 }

@@ -1,7 +1,6 @@
 extends layout
 
 block content
-  h3= title
 
   table.table.table-sm.table-hover
     thead.thead-light
@@ -10,6 +9,7 @@ block content
         th(scope='col') Approved
         th(scope='col') Pending
         th(scope='col') Total
+        th(scope='col')
 
     tbody
       tr
@@ -19,6 +19,10 @@ block content
         td 
           a(href='/dashboard/articles') !{data.article_count_pending}
         td !{data.article_count}
+        td
+          a(href='articles/create' title="Add Article")
+            svg.bi.bi-plus-circle-fill.text-success(viewBox='0 0 16 16', fill='currentColor', xmlns='http://www.w3.org/2000/svg')
+              path(fill-rule='evenodd', d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4a.5.5 0 0 0-1 0v3.5H4a.5.5 0 0 0 0 1h3.5V12a.5.5 0 0 0 1 0V8.5H12a.5.5 0 0 0 0-1H8.5V4z')
       tr
         td #[strong Categories:] 
         td 
@@ -26,10 +30,16 @@ block content
         td 
           a(href='/dashboard/categories') !{data.category_count_pending}
         td !{data.category_count}
+        td
+          a(href='categories/create' title="Add Category")
+            svg.bi.bi-plus-circle-fill.text-success(viewBox='0 0 16 16', fill='currentColor', xmlns='http://www.w3.org/2000/svg')
+              path(fill-rule='evenodd', d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4a.5.5 0 0 0-1 0v3.5H4a.5.5 0 0 0 0 1h3.5V12a.5.5 0 0 0 1 0V8.5H12a.5.5 0 0 0 0-1H8.5V4z')
       tr
         td #[strong Comments:] 
         td !{data.comment_count_approved}
         td 
           a(href='/dashboard/comments') !{data.comment_count_pending}
         td !{data.comment_count}
-      
+        td
+
+block right-sidebar

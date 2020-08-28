@@ -8,11 +8,7 @@ var category_controller = require("../controllers/categoryController");
 /// CATEGORY ROUTES ///
 
 // GET request for creating a Category. NOTE This must come before route that displays Category (uses id).
-router.get(
-  "/create",
-  ensureAuthenticated,
-  category_controller.category_create_get
-);
+router.get("/create", ensureAdmin, category_controller.category_create_get);
 
 //POST request for creating Category.
 router.post("/create", category_controller.category_create_post);
@@ -41,6 +37,6 @@ router.post("/:id/:slug/update", category_controller.category_update_post);
 router.get("/:id/:slug", category_controller.category_detail);
 
 // GET request for list of all Categorie.
-router.get("/", category_controller.category_list);
+router.get("/", ensureAdmin, category_controller.category_list);
 
 module.exports = router;

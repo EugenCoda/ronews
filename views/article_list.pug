@@ -9,8 +9,10 @@ block content
         th(scope='col') Title 
         th(scope='col') Author 
         th(scope='col') Date Published 
+        th(scope='col')
+        th(scope='col')
     tbody
-      - article_list.sort(function(a, b) {let textA = a.createdAt; let textB = b.createdAt; return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+      - article_list.sort(function(a, b) {let textA = a.createdAt; let textB = b.createdAt; return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
       each article in article_list
         tr
           td
@@ -18,6 +20,16 @@ block content
           td 
             a(href='#') #{article.createdBy.name} 
           td #{moment(article.createdAt).format('MMM D, YYYY HH:mm')}
+          td
+            a(href=article.url+'/update' title="Edit Article")   
+              svg.bi.bi-pencil(viewBox='0 0 16 16', fill='currentColor', xmlns='http://www.w3.org/2000/svg')
+                path(fill-rule='evenodd', d='M11.293 1.293a1 1 0 0 1 1.414 0l2 2a1 1 0 0 1 0 1.414l-9 9a1 1 0 0 1-.39.242l-3 1a1 1 0 0 1-1.266-1.265l1-3a1 1 0 0 1 .242-.391l9-9zM12 2l2 2-9 9-3 1 1-3 9-9z')
+                path(fill-rule='evenodd', d='M12.146 6.354l-2.5-2.5.708-.708 2.5 2.5-.707.708zM3 10v.5a.5.5 0 0 0 .5.5H4v.5a.5.5 0 0 0 .5.5H5v.5a.5.5 0 0 0 .5.5H6v-1.5a.5.5 0 0 0-.5-.5H5v-.5a.5.5 0 0 0-.5-.5H3z') 
+          |  
+          td
+            a(href=article.url+'/delete' title="Delete Article")  
+              svg.bi.bi-x-circle-fill.text-danger(viewBox='0 0 16 16', fill='currentColor', xmlns='http://www.w3.org/2000/svg')
+                path(fill-rule='evenodd', d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.146-3.146a.5.5 0 0 0-.708-.708L8 7.293 4.854 4.146a.5.5 0 1 0-.708.708L7.293 8l-3.147 3.146a.5.5 0 0 0 .708.708L8 8.707l3.146 3.147a.5.5 0 0 0 .708-.708L8.707 8l3.147-3.146z')
       else
         tr
           th(scope='row') 
@@ -129,3 +141,8 @@ block content
               li.page-item.disabled
                 a.page-link(href='articles', aria-label='Next' tabindex="-1" aria-disabled="true")
                   span(aria-hidden='true') »
+
+  
+  a.btn.btn-primary(href='/articles/create') Add Article
+  | 
+  a.btn.btn-secondary(href='/dashboard') Go back to Dashboard
