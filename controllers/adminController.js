@@ -37,6 +37,10 @@ exports.admin_dashboard_get = (req, res, next) => {
       comment_count_pending: (callback) => {
         Comment.countDocuments({ isVerified: false }, callback);
       },
+      // All recommended articles
+      article_count_recommended: (callback) => {
+        Article.countDocuments({ isRecommended: true }, callback);
+      },
     },
     (err, results) => {
       res.render("admin_dashboard", {
@@ -63,6 +67,7 @@ exports.admin_articles_get = (req, res, next) => {
           .exec(callback);
       },
     },
+
     (err, results) => {
       res.render("admin_articles", {
         title: "Pending Articles",
@@ -98,6 +103,63 @@ exports.admin_articles_post = (req, res, next) => {
         }
         req.flash("success", "The article has been successfully approved.");
         res.redirect("/dashboard/articles");
+        return;
+      });
+    }
+  );
+};
+
+// Display Recommended Articles on GET.
+exports.admin_articles_recommended_get = (req, res, next) => {
+  async.parallel(
+    {
+      articles: (callback) => {
+        Article.find(
+          { isRecommended: true },
+          "title isRecommended createdBy createdAt"
+        )
+          .sort("title")
+          .populate("createdBy")
+          .exec(callback);
+      },
+    },
+    (err, results) => {
+      res.render("admin_articles_recommended", {
+        title: "Recommended Articles",
+        error: err,
+        articles: results.articles,
+      });
+    }
+  );
+};
+
+// Handle Removing Articles from Recommended on POST
+exports.admin_articles_recommended_post = (req, res, next) => {
+  async.parallel(
+    {
+      article: (callback) => {
+        Article.findOne({ isRecommended: true, _id: req.body.articleId }).exec(
+          callback
+        );
+      },
+    },
+    (err, article) => {
+      if (err) {
+        return next(err);
+      }
+
+      article.article.isRecommended = false;
+
+      article.article.markModified("isRecommended");
+      article.article.save((err) => {
+        if (err) {
+          return next(err);
+        }
+        req.flash(
+          "success",
+          "The article has been successfully removed from recommended list."
+        );
+        res.redirect("/dashboard/articles-recommended");
         return;
       });
     }

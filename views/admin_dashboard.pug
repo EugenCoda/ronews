@@ -2,33 +2,37 @@ extends layout
 
 block content
 
-  table.table.table-sm.table-hover
+  table.table.table-sm.table-hover(style='text-align:center;')
     thead.thead-light
       tr
         th(scope='col') Type 
         th(scope='col') Approved
         th(scope='col') Pending
+        th(scope='col') Recomm. articles
         th(scope='col') Total
         th(scope='col')
 
     tbody
       tr
-        td #[strong Articles:] 
-        td 
-          a(href='/articles') !{data.article_count_approved}
+        td  
+          a(href='/articles') #[strong Articles:]
+        td !{data.article_count_approved}
         td 
           a(href='/dashboard/articles') !{data.article_count_pending}
+        td 
+          a(href='/dashboard/articles-recommended') !{data.article_count_recommended}
         td !{data.article_count}
         td
           a(href='articles/create' title="Add Article")
             svg.bi.bi-plus-circle-fill.text-success(viewBox='0 0 16 16', fill='currentColor', xmlns='http://www.w3.org/2000/svg')
               path(fill-rule='evenodd', d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4a.5.5 0 0 0-1 0v3.5H4a.5.5 0 0 0 0 1h3.5V12a.5.5 0 0 0 1 0V8.5H12a.5.5 0 0 0 0-1H8.5V4z')
       tr
-        td #[strong Categories:] 
         td 
-          a(href='/categories') !{data.category_count_approved}
+         a(href='/categories') #[strong Categories:] 
+        td !{data.category_count_approved}
         td 
           a(href='/dashboard/categories') !{data.category_count_pending}
+        td
         td !{data.category_count}
         td
           a(href='categories/create' title="Add Category")
@@ -39,7 +43,8 @@ block content
         td !{data.comment_count_approved}
         td 
           a(href='/dashboard/comments') !{data.comment_count_pending}
+        td
         td !{data.comment_count}
         td
 
-block right-sidebar
+

@@ -8,7 +8,8 @@ block content
       tr
         th(scope='col' width='250px') Title 
         th(scope='col') Author 
-        th(scope='col') isVerified 
+        th(scope='col') Date Published 
+        th(scope='col') isRecommended 
 
     tbody
       - articles.sort(function(a, b) {let textA = a.title.toUpperCase(); let textB = b.title.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
@@ -21,17 +22,15 @@ block content
           
           td 
             a(href=article.createdBy.url) #{article.createdBy.name} 
-          if article.isVerified
-            td Yes
-          else
-            td 
-              form(method='POST' action='')  
-                label(for='articleId')
-                input#articleId.form-control(type='hidden' name='articleId' required='true' value=article._id)
-                button.btn.btn-primary(type='submit') Approve
+          td #{moment(article.createdAt).format('MMM D, YYYY HH:mm')}
+          td 
+            form(method='POST' action='')
+              label(for='articleId')
+              input#articleId.form-control(type='hidden' name='articleId' required='true' value=article._id)
+              button.btn.btn-danger(type='submit') Remove
       else
         tr
-          td There are no articles pending approval
+          td There are no recommended articles
           td
           td
     

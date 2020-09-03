@@ -4,6 +4,12 @@ block content
   h3= title
   form(method='POST', action='')
     div.form-group
+      label(for='isRecommended') Recommended Article:
+      select#isRecommended.form-control(type='select', name='isRecommended') 
+        option(value="true") Yes
+        option(value="false" selected="selected") No
+
+    div.form-group
       label(for='title') Title:
       input#title.form-control(name='title', type='text' required='true' value=(undefined===article ? '' : article.title) )
     div.form-group

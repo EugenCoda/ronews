@@ -16,6 +16,20 @@ router.get("/articles", ensureAdmin, admin_controller.admin_articles_get);
 // POST Approving Articles
 router.post("/articles", ensureAdmin, admin_controller.admin_articles_post);
 
+// GET Recommended Articles
+router.get(
+  "/articles-recommended",
+  ensureAdmin,
+  admin_controller.admin_articles_recommended_get
+);
+
+// POST Recommended Articles
+router.post(
+  "/articles-recommended",
+  ensureAdmin,
+  admin_controller.admin_articles_recommended_post
+);
+
 // GET Pending Categories
 router.get("/categories", ensureAdmin, admin_controller.admin_categories_get);
 

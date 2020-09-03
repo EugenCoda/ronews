@@ -1,7 +1,9 @@
 extends layout
 
 block content
-  h1= article.title
+  include helpers
+  div(class='container-fluid')
+  h2= article.title
   h6 #{article.createdBy.name} - #{moment(article.createdAt).format('MMM D, YYYY HH:mm')}
   p #[strong Category:]&nbsp;
     each val, index in article.category
@@ -11,9 +13,41 @@ block content
   hr
   div
     img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
-  div
-    p!= article.text
-  hr
+  div(class='container-fluid')
+    div(class='row')
+      div(class='col-sm-8')
+        div
+          p!= article.text
+      div(class='col-sm-4')
+        .container-fluid
+          .row
+            .sidebar-article
+              br
+              h6.article_title Related Articles:
+              br
+              - articles.sort(function(a, b) {let textA = a.createdAt; let textB = b.createdAt; return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
+              //- check each category from this article
+              each val in article.category
+                //- check each article from the latest articles from DB - currently limit set to 30 (articleController)
+                each cat_article in articles
+                  //- exclude this article from the list
+                  if cat_article.id!=article.id
+                    //- check each category from the article from DB
+                    each value in cat_article.category
+                      //- if it matches with the category from this article, show article from DB
+                      if value.id==val.id
+                        article.article-md
+                          .container-fluid
+                            .row  
+                              figure.article-thumb
+                                a(href=cat_article.url)
+                                  img(id='article_img', src=`/images/articles/${cat_article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${cat_article.title}`, alt=`${cat_article.title}`)
+                              div.article-content
+                                h5 
+                                  a.article_title(href=cat_article.url) #{cat_article.title}
+                                div
+                                  p(style='display:inline') !{truncate(cat_article.text, 150)} ...
+                          hr
   if user
     if user.email == article.createdBy.email
       a.btn.btn-dark(href=article.url+'/update') Edit
@@ -21,3 +55,6 @@ block content
       a.btn.btn-danger.delete-article(href=article.url+'/delete', data-id=article._id) Delete
     | 
     a.btn.btn-secondary(href='/articles') Back to articles
+    hr
+
+  

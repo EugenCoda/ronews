@@ -9,6 +9,10 @@ block content
         th(scope='col') Title 
         th(scope='col') Author 
         th(scope='col') Date Published 
+        th(scope='col' width='50px') 
+          a(href='/dashboard/articles') Verified 
+        th(scope='col' width='50px') 
+          a(href='/dashboard/articles-recommended') Recomm.
         th(scope='col')
         th(scope='col')
     tbody
@@ -20,6 +24,14 @@ block content
           td 
             a(href='#') #{article.createdBy.name} 
           td #{moment(article.createdAt).format('MMM D, YYYY HH:mm')}
+          if article.isVerified
+            td 
+          else 
+            td No 
+          if article.isRecommended
+            td Yes
+          else
+            td  
           td
             a(href=article.url+'/update' title="Edit Article")   
               svg.bi.bi-pencil(viewBox='0 0 16 16', fill='currentColor', xmlns='http://www.w3.org/2000/svg')

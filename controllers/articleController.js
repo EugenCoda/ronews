@@ -12,8 +12,7 @@ exports.article_list = function (req, res, next) {
   async.parallel(
     {
       article_list: (callback) => {
-        // Show it only if it's verified or created by the logged user
-        Article.find({ $or: [{ isVerified: true }, { createdBy: req.user }] })
+        Article.find()
           .skip((page - 1) * pagination)
           .limit(pagination)
           .populate("article")
@@ -23,11 +22,7 @@ exports.article_list = function (req, res, next) {
       },
 
       article_count: (callback) => {
-        // Count it only if it's verified or created by the logged user
-        Article.countDocuments(
-          { $or: [{ isVerified: true }, { createdBy: req.user }] },
-          callback
-        );
+        Article.countDocuments(callback);
       },
     },
     (err, results) => {
@@ -94,6 +89,7 @@ exports.article_create_post = [
       title: req.body.title,
       text: req.body.text,
       category: req.body.category,
+      isRecommended: req.body.isRecommended,
       createdBy: req.user,
       updatedBy: req.user,
     });
@@ -290,6 +286,7 @@ exports.article_update_post = [
       title: req.body.title,
       text: req.body.text,
       category: req.body.category,
+      isRecommended: req.body.isRecommended,
       createdBy: req.user,
       updatedBy: req.user,
       _id: req.params.id, //This is required, or a new ID will be assigned!
@@ -372,6 +369,15 @@ exports.article_detail = function (req, res, next) {
           .populate("category")
           .exec(callback);
       },
+      articles: function (callback) {
+        Article.find()
+          .populate("article")
+          .populate("createdBy")
+          .populate("category")
+          .sort([["createdAt", "ascending"]])
+          .limit(30)
+          .exec(callback);
+      },
     },
     function (err, results) {
       if (err) {
@@ -379,6 +385,7 @@ exports.article_detail = function (req, res, next) {
       }
       res.render("article_detail", {
         article: results.article,
+        articles: results.articles,
       });
     }
   );

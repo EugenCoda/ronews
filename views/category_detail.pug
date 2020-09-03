@@ -3,49 +3,52 @@ extends layout
 block content
 
   include helpers
-    
-  h3 #{category.name}
-  hr
-  - category_articles.sort(function(a, b) {let textA = a.createdAt; let textB = b.createdAt; return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
-  - let i = 0;
-  each article in category_articles
-    if i == 0
-      article.article-lg
-        figure.article-thumb
-          a(href=article.url)
-            img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
-        each val, index in article.category
-          a.article-tag(href=val.url) #{val.name}
-          if index < article.category.length - 1
-            |  
-        h2 
-          a.article_title(href=article.url) #{article.title}
-        div
-          p(style='display:inline') !{truncate(article.text, 300)} 
-            |
-            a(href=article.url) ...more
-    else
-      article.article-md
-        .container-fluid
-          .row  
-            .col-md-6
+  div(class='container-fluid')
+    div(class='row')
+      div(class='col-sm-8')  
+        h3 #{category.name}
+        hr
+        - category_articles.sort(function(a, b) {let textA = a.createdAt; let textB = b.createdAt; return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
+        - let i = 0;
+        each article in category_articles
+          if i == 0
+            article.article-lg
               figure.article-thumb
                 a(href=article.url)
                   img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
-            .col-md-6
-              div.article-content
-                each val, index in article.category
-                  a.article-tag(href=val.url) #{val.name}
-                  if index < article.category.length - 1
-                    |  
-                h5 
-                  a.article_title(href=article.url) #{article.title}
-                div
-                  p(style='display:inline') !{truncate(article.text, 150)} 
-                p Published #{moment(article.createdAt).fromNow()}
-          
-    - i++;
-    br
+              each val, index in article.category
+                a.article-tag(href=val.url) #{val.name}
+                if index < article.category.length - 1
+                  |  
+              h2 
+                a.article_title(href=article.url) #{article.title}
+              div
+                p(style='display:inline') !{truncate(article.text, 300)} 
+                  |
+                  a(href=article.url) ...more
+          else
+            article.article-md
+              .container-fluid
+                .row  
+                  .col-md-6
+                    figure.article-thumb
+                      a(href=article.url)
+                        img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
+                  .col-md-6
+                    div.article-content
+                      each val, index in article.category
+                        a.article-tag(href=val.url) #{val.name}
+                        if index < article.category.length - 1
+                          |  
+                      h5 
+                        a.article_title(href=article.url) #{article.title}
+                      div
+                        p(style='display:inline') !{truncate(article.text, 150)} 
+                      p Published #{moment(article.createdAt).fromNow()}
+                
+          - i++;
+          br
+      div(class='col-sm-4')
 
     //- Pagination component
     nav(aria-label='Category detail page')

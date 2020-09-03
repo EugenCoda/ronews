@@ -3,71 +3,90 @@ extends layout
 block content
  
   include helpers
-
-  - article_last.sort(function(a, b) {let textA = a.createdAt; let textB = b.createdAt; return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
-  - let i = 0;
-  each article in article_last
-    if i == 0
-      article.article-lg
-        figure.article-thumb
-          a(href=article.url)
-            img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
-        each val, index in article.category
-          a.article-tag(href=val.url) #{val.name}
-          if index < article.category.length - 1
-            |  
-        h2 
-          a.article_title(href=article.url) #{article.title}
-        div
-          p(style='display:inline') !{truncate(article.text, 300)} 
-            |
-            a(href=article.url) ...more
-    else
-      article.article-md
-        .container-fluid
-          .row  
-            .col-md-6
-              figure.article-thumb
-                a(href=article.url)
-                  img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
-            .col-md-6
-              div.article-content
+  div(class='container-fluid')
+    div(class='row')
+      div(class='col-sm-8')
+        - article_last.sort(function(a, b) {let textA = a.createdAt; let textB = b.createdAt; return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
+        - let i = 0;
+        each article in article_last
+          if !article.isRecommended
+            if i == 0
+              article.article-lg
+                figure.article-thumb
+                  a(href=article.url)
+                    img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
                 each val, index in article.category
                   a.article-tag(href=val.url) #{val.name}
                   if index < article.category.length - 1
                     |  
-                h5 
+                h2 
                   a.article_title(href=article.url) #{article.title}
                 div
-                  p(style='display:inline') !{truncate(article.text, 150)} 
-                p Published #{moment(article.createdAt).fromNow()}
-          
-    - i++;
-    br
-
-block right-sidebar
-
-  .container-fluid
-    .row
-      .exchange_rate
-        br
-        h6.article_title Exchange Rate for RON
-        p#publishingdate Date:     
-        table.table.table-borderless.table-sm 
-          tbody
-            tr
-              td#EUR 1 EUR = 
-            tr
-              td#USD 1 USD = 
-            tr
-              td#GBP 1 GBP = 
-            tr
-              td#MDL 1 MDL = 
-            tr
-              td#PLN 1 PLN = 
-                
-      .sidebar-article
-        h6.article_title Recommended Articles
+                  p(style='display:inline') !{truncate(article.text, 300)} 
+                    |
+                    a(href=article.url) ...more
+            else
+              article.article-md
+                .container-fluid
+                  .row  
+                    .col-md-6
+                      figure.article-thumb
+                        a(href=article.url)
+                          img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
+                    .col-md-6
+                      div.article-content
+                        each val, index in article.category
+                          a.article-tag(href=val.url) #{val.name}
+                          if index < article.category.length - 1
+                            |  
+                        h5 
+                          a.article_title(href=article.url) #{article.title}
+                        div
+                          p(style='display:inline') !{truncate(article.text, 150)} ...
+                        p Published #{moment(article.createdAt).fromNow()}
+                  
+            - i++;
+            br
+      
+      div(class='col-sm-4')
+        .container-fluid
+          .row
+            .exchange_rate
+              br
+              h6.article_title Exchange Rate for RON
+              p#publishingdate Date:     
+              .container-fluid
+                table.table.table-borderless.table-sm 
+                  tbody
+                    tr
+                      td#EUR 1 EUR = 
+                    tr
+                      td#USD 1 USD = 
+                    tr
+                      td#GBP 1 GBP = 
+                    tr
+                      td#MDL 1 MDL = 
+                    tr
+                      td#PLN 1 PLN = 
+                      
+            .sidebar-article
+              h6.article_title Recommended Articles
+              br
+              - article_last.sort(function(a, b) {let textA = a.createdAt; let textB = b.createdAt; return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
+              each article in article_last
+                if article.isRecommended
+                  article.article-md
+                  .container-fluid
+                    .row  
+                      figure.article-thumb
+                        a(href=article.url)
+                          img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
+                      div.article-content
+                        h5 
+                          a.article_title(href=article.url) #{article.title}
+                        div
+                          p(style='display:inline') !{truncate(article.text, 150)} ...
+                    hr
 
   //- Pagination component
   nav(aria-label='Main page')

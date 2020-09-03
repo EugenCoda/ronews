@@ -13,6 +13,7 @@ var ArticleSchema = new Schema(
     createdBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
     updatedBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
     isVerified: { type: Boolean, default: false },
+    isRecommended: { type: Boolean, default: false },
     slug: { type: String, slug: "title", unique: true },
   },
   {
