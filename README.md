@@ -16,11 +16,13 @@ Ro News
 
 TODO
 
+- deploy - in progress
+- deploy - .env; helmet, compression etc - steps from MDN
+- deploy - steps from Traversy
 - search - in progress (search for category + pagination)
 - comments section
 - newsletter
 - social media
 - website domain
-- deploy
 - google analytics
 - cookies messages and settings

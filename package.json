@@ -13,6 +13,7 @@
     "async": "^3.2.0",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^4.5.2",
+    "compression": "^1.7.4",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^3.2.0",
     "cookie-parser": "~1.4.4",
@@ -23,6 +24,7 @@
     "express-messages": "^1.0.1",
     "express-session": "^1.17.1",
     "express-validator": "^6.6.1",
+    "helmet": "^4.1.0",
     "http-errors": "~1.6.3",
     "jquery": "^3.5.1",
     "moment": "^2.27.0",
@@ -33,7 +35,7 @@
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "popper.js": "^1.16.1",
-    "pug": "2.0.0-beta11",
+    "pug": "^3.0.0",
     "xml-js": "^1.6.11"
   },
   "devDependencies": {
