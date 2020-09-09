@@ -43,11 +43,12 @@ app.use(
         "style-src": [
           "'self'",
           "stackpath.bootstrapcdn.com",
+          "cdnjs.cloudflare.com",
           "fonts.googleapis.com",
           "'unsafe-inline'",
         ],
         "font-src": ["'self'", "fonts.googleapis.com", "fonts.gstatic.com"],
-        "img-src": ["'self'", "data:"],
+        "img-src": ["'self'", "cdnjs.cloudflare.com", "data:"],
       },
     },
   })

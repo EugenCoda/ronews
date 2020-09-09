@@ -15,15 +15,21 @@ Ro News
 - Font-family chosen: "Roboto", sans-serif
 - Deployed - digital ocean, nginx, domain name (namecheap), ssl certificate
 - Deployed - .env; helmet, compression;
+- Email (Zoho Mail + Sendgrid)
+- New database for production
 
 TODO
 
-- Email (Zoho Mail + Sendgrid) - check if it works after update (account verification token)
-- new db - in progress
+- upload/handling images
 - search - in progress (search for category + pagination)
 - comments section
 - newsletter
 - social media
 - google analytics
 - cookies messages and settings
-- handling images
+- logo
+
+Notes:
+
+- for starting the pm2: NODE_ENV=production pm2 start npm -- start --update-env
+- Email (Zoho Mail + Sendgrid): not able to open email links, due to sendgrid link behind my link - TBD how to fix it (so, no registration possible for now)

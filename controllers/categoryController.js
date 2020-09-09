@@ -79,7 +79,7 @@ exports.category_detail = function (req, res, next) {
 
       // Successful, so render
       res.render("category_detail", {
-        title: "Category Detail",
+        title: "RR | " + results.category.name,
         page: page,
         pagination: pagination,
         category: results.category,

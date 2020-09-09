@@ -16,12 +16,12 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 // Display Help Page on GET.
 exports.user_help_get = (req, res, next) => {
-  res.render("user_help", { title: "Help" });
+  res.render("user_help", { title: "RR | Help" });
 };
 
 // Display Help Contact Page on GET.
 exports.user_help_contact_get = (req, res, next) => {
-  res.render("user_help_contact", { title: "Contact Us" });
+  res.render("user_help_contact", { title: "RR | Contact Us" });
 };
 
 // Handle Help Contact Page on POST.

@@ -17,7 +17,7 @@ html(lang='en')
 
       //- Navbar
       nav.navbar.navbar-expand-md.navbar-dark
-        a.navbar-brand(href='/') Ro News
+        a.navbar-brand(href='/') Romanian Reporter
         
         //- Hamburger menu icon
         button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbar-menu', aria-controls='navbar-menu', aria-expanded='false', aria-label='Toggle navigation')
@@ -69,12 +69,13 @@ html(lang='en')
                     a.dropdown-item(href='/dashboard') Dashboard
                   a.dropdown-item(href='/users/account') Account
                   a.dropdown-item(href='/users/logout') Log Out
-            else
-              li.nav-item.active
-                a.nav-link(href='/users/register') Register
+            //- Issue with accessing the verification link in the email 
+            //- else
+            //-   li.nav-item.active
+            //-     a.nav-link(href='/users/register') Register
               
-              li.nav-item.active
-                a.nav-link(href='/users/login') Login
+            //-   li.nav-item.active
+            //-     a.nav-link(href='/users/login') Login
 
       div(class='container-fluid')
         br

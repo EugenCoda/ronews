@@ -40,7 +40,7 @@ exports.main_page = function (req, res, next) {
       }
       //Successful, so render
       res.render("index", {
-        title: "Main Page",
+        title: "Romanian Reporter",
         page: page,
         pagination: pagination,
         article_last: results.article_last,
@@ -141,7 +141,7 @@ exports.search = (req, res, next) => {
       }
 
       res.render("search", {
-        title: "Search Results",
+        title: "RR | Search Results",
         articles: results.articles,
         categories: results.categories,
       });
