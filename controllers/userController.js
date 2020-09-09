@@ -149,7 +149,7 @@ exports.user_create_post = [
                 html: `Hello ${user.username},
                     <br>
                     <br>
-                    Please verify your RoNews account by clicking the link below: 
+                    Please verify your account with Romanian Reporter by clicking the link below: 
                     <br>
                     <br>
                     <a href=http://${req.headers.host}/users/confirmation/${token.token} target="_blank">http://${req.headers.host}/users/confirmation/${token.token}</a>.`,
@@ -370,7 +370,7 @@ exports.resend_token_post = [
               html: `Hello ${user.user.username},
                 <br>
                 <br>
-                Please verify your RoNews account by clicking the link below: 
+                Please verify your account with Romanian Reporter by clicking the link below: 
                 <br>
                 <br>
                 <a href=http://${req.headers.host}/users/confirmation/${token.token} target="_blank">http://${req.headers.host}/users/confirmation/${token.token}</a>.`,
@@ -468,7 +468,7 @@ exports.reset_password_email_post = [
                 If you did not request that your password be reset, you can safely ignore this email. It's likely that another person has mistakenly attempted to log in using your email. As long as you do not click the link above, no action will be taken and your account will remain secure.
                 <br>
                 <br>
-                The RoNews Team`,
+                The Romanian Reporter Team`,
             };
 
             sgMail.send(mail, (err) => {
@@ -592,7 +592,7 @@ exports.reset_password_post = [
                       const mail = {
                         to: user.user.email,
                         from: process.env.ADMIN_EMAIL,
-                        subject: "RoNews - password changed",
+                        subject: "Romanian Reporter - password changed",
                         html: `Hello ${user.user.username},
                           <br>
                           <br>
@@ -602,7 +602,7 @@ exports.reset_password_post = [
                           If you did not recently reset or change your password, it is possible that your account has been compromised. If you have any questions about this, please contact us at ${process.env.ADMIN_EMAIL}
                           <br>
                           <br>
-                          The RoNews Team`,
+                          The Romanian Reporter Team`,
                       };
 
                       sgMail.send(mail, (err) => {
@@ -734,7 +734,7 @@ exports.user_account_post = [
                       const mail = {
                         to: user.user.email,
                         from: process.env.ADMIN_EMAIL,
-                        subject: "RoNews - password changed",
+                        subject: "Romanian Reporter - password changed",
                         html: `Hello ${user.user.username},
                                 <br>
                                 <br>
@@ -744,7 +744,7 @@ exports.user_account_post = [
                                 If you did not recently reset or change your password, it is possible that your account has been compromised. If you have any questions about this, please contact us at ${process.env.ADMIN_EMAIL}
                                 <br>
                                 <br>
-                                The RoNews Team`,
+                                The Romanian Reporter Team`,
                       };
 
                       sgMail.send(mail, (err) => {
