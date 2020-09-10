@@ -11,13 +11,27 @@ block content
       if index < article.category.length - 1
         |, 
   hr
-  div
-    img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
+  div(class='container-fluid')
+    div(class='row')
+      div(class='col-sm-10')
+        div
+          img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
   div(class='container-fluid')
     div(class='row')
       div(class='col-sm-8')
         div
           p!= article.text
+        //- Upload Image Form
+        if user
+          if user.email == article.createdBy.email
+            hr
+            h3 Upload Image
+            br
+            //- name of the image will be equal to article id -> passed to Storage Engine
+            form(action=`/articles/${article._id}/${article.slug}`, method='post', enctype='multipart/form-data')
+              input(type='file', accept='image/*', name=article._id)
+              input(type='submit', value='upload')
+            hr
       div(class='col-sm-4')
         .container-fluid
           .row

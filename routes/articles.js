@@ -34,7 +34,10 @@ router.get(
 router.post("/:id/:slug/update", article_controller.article_update_post);
 
 // GET request for one Article.
-router.get("/:id/:slug", article_controller.article_detail);
+router.get("/:id/:slug", article_controller.article_detail_get);
+
+// POST request for one Article (Image Upload).
+router.post("/:id/:slug", ensureAdmin, article_controller.article_detail_post);
 
 // GET request for list of all Articles.
 router.get("/", ensureAdmin, article_controller.article_list);

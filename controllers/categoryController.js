@@ -32,7 +32,13 @@ exports.category_detail = function (req, res, next) {
       },
 
       category_articles: function (callback) {
-        Article.find({ category: req.params.id })
+        // Show it only if it's from this category AND verified or created by the logged user
+        Article.find({
+          $and: [
+            { $or: [{ isVerified: true }, { createdBy: req.user }] },
+            { category: req.params.id },
+          ],
+        })
           .skip((page - 1) * pagination)
           .limit(pagination)
           .sort("title")

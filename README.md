@@ -17,10 +17,10 @@ Ro News
 - Deployed - .env; helmet, compression;
 - Email (Zoho Mail + Sendgrid)
 - New database for production
+- Uploading images to articles (with Multer middleware)
 
 TODO
 
-- upload/handling images
 - search - in progress (search for category + pagination)
 - comments section
 - newsletter
@@ -32,4 +32,5 @@ TODO
 Notes:
 
 - for starting the pm2: NODE_ENV=production pm2 start npm -- start --update-env
+- for deploying a new site version: additionally create config.env file
 - Email (Zoho Mail + Sendgrid): not able to open email links, due to sendgrid link behind my link - TBD how to fix it (so, no registration possible for now)

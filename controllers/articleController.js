@@ -3,6 +3,8 @@ var Category = require("../models/category");
 var Comment = require("../models/comment");
 var User = require("../models/user");
 var async = require("async");
+var multer = require("multer");
+const path = require("path");
 const { body, validationResult } = require("express-validator");
 
 // Display list of all Articles.
@@ -359,8 +361,8 @@ exports.article_update_post = [
   },
 ];
 
-// Display detail page for a specific Article.
-exports.article_detail = function (req, res, next) {
+// Display detail page for a specific Article on GET.
+exports.article_detail_get = function (req, res, next) {
   async.parallel(
     {
       article: function (callback) {
@@ -370,7 +372,8 @@ exports.article_detail = function (req, res, next) {
           .exec(callback);
       },
       articles: function (callback) {
-        Article.find()
+        // Show it only if it's verified or created by the logged user
+        Article.find({ $or: [{ isVerified: true }, { createdBy: req.user }] })
           .populate("article")
           .populate("createdBy")
           .populate("category")
@@ -390,3 +393,145 @@ exports.article_detail = function (req, res, next) {
     }
   );
 };
+
+// Handle Upload Image for a specific Article on POST.
+
+exports.article_detail_post = [
+  (req, res, next) => {
+    // Set Storage Engine
+    const storage = multer.diskStorage({
+      destination: "public/images/articles",
+      filename: function (req, file, cb) {
+        // file.fieldname is the article id passed from pug form
+        cb(null, file.fieldname + path.extname(file.originalname));
+      },
+    });
+
+    //Init Upload
+    const upload = multer({
+      storage: storage,
+      limits: { fileSize: 1000000 },
+      fileFilter: function (req, file, cb) {
+        checkFileType(file, cb);
+      },
+    }).single(req.params.id);
+
+    // Check File Type
+    function checkFileType(file, cb) {
+      // Allowed ext
+      const filetypes = /jpeg|jpg|png|gif/;
+      // Check ext
+      const extname = filetypes.test(
+        path.extname(file.originalname).toLowerCase()
+      );
+      // Check mime
+      const mimetype = filetypes.test(file.mimetype);
+
+      if (mimetype && extname) {
+        return cb(null, true);
+      } else {
+        cb("Error: Images Only!");
+      }
+    }
+
+    // req.file is the `photo` file
+    // req.body will hold the text fields, if there were any
+    upload(req, res, (err) => {
+      if (err) {
+        async.parallel(
+          {
+            article: function (callback) {
+              Article.findById(req.params.id)
+                .populate("createdBy")
+                .populate("category")
+                .exec(callback);
+            },
+            articles: function (callback) {
+              Article.find()
+                .populate("article")
+                .populate("createdBy")
+                .populate("category")
+                .sort([["createdAt", "ascending"]])
+                .limit(30)
+                .exec(callback);
+            },
+          },
+          (error, results) => {
+            if (error) {
+              return next(error);
+            }
+            req.flash("danger", err.toString());
+            res.redirect(
+              `/articles/${results.article._id}/${results.article.slug}`
+            );
+            return;
+          }
+        );
+      } else {
+        if (req.file == undefined) {
+          async.parallel(
+            {
+              article: function (callback) {
+                Article.findById(req.params.id)
+                  .populate("createdBy")
+                  .populate("category")
+                  .exec(callback);
+              },
+              articles: function (callback) {
+                Article.find()
+                  .populate("article")
+                  .populate("createdBy")
+                  .populate("category")
+                  .sort([["createdAt", "ascending"]])
+                  .limit(30)
+                  .exec(callback);
+              },
+            },
+            (error, results) => {
+              if (error) {
+                return next(error);
+              }
+
+              req.flash("danger", "No file selected!");
+              res.redirect(
+                `/articles/${results.article._id}/${results.article.slug}`
+              );
+              return;
+            }
+          );
+        } else {
+          async.parallel(
+            {
+              article: function (callback) {
+                Article.findById(req.file.fieldname)
+                  .populate("createdBy")
+                  .populate("category")
+                  .exec(callback);
+              },
+              articles: function (callback) {
+                Article.find()
+                  .populate("article")
+                  .populate("createdBy")
+                  .populate("category")
+                  .sort([["createdAt", "ascending"]])
+                  .limit(30)
+                  .exec(callback);
+              },
+            },
+            (error, results) => {
+              if (error) {
+                return next(error);
+              }
+
+              req.flash("success", "File Uploaded!");
+              res.redirect(
+                `/articles/${results.article._id}/${results.article.slug}`
+              );
+              return;
+            }
+          );
+        }
+      }
+    });
+  },
+];
