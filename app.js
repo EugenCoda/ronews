@@ -63,6 +63,9 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
+// Loading the environment variables to pug templates
+app.locals.env = process.env;
+
 //Moment - date formatting
 app.locals.moment = require("moment"); //for formatting the date in the pug template
 

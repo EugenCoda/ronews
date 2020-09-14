@@ -18,14 +18,16 @@ Ro News
 - Email (Zoho Mail + Sendgrid)
 - New database for production
 - Uploading images to articles (with Multer middleware)
+- Removed layout_ignore file (and moved categories to config.env)
 
 TODO
 
+- google analytics - in progress (added gtag.js to layout.pug)
+- SEO
 - search - in progress (search for category + pagination)
 - comments section
 - newsletter
 - social media
-- google analytics
 - cookies messages and settings
 - logo
 

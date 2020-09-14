@@ -156,7 +156,7 @@ block content
 
   if user
     hr
-    if user.email==ADMIN_EMAIL
+    if user.email==env.ADMIN_EMAIL
       a.btn.btn-dark(href=category.url+'/update') Update category
       | 
       a.btn.btn-danger(href=category.url+'/delete') Delete category

@@ -5,14 +5,19 @@ html(lang='en')
     title= title
     meta(charset='utf-8')
     meta(name='viewport', content='width=device-width, initial-scale=1')
+    // Global site tag (gtag.js) - Google Analytics
+    script(async='', src='https://www.googletagmanager.com/gtag/js?id=UA-177935671-1')
+    script.
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-177935671-1');
     link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css', integrity='sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z', crossorigin='anonymous')
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(href='https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap', rel='stylesheet')
   
   body
 
-    include layout_ignore
-    
     .app_body
 
       //- Navbar
@@ -26,29 +31,29 @@ html(lang='en')
         #navbar-menu.collapse.navbar-collapse
           ul.navbar-nav.mr-auto
             li.nav-item.active
-              a.nav-link(href=`/categories/${BUSINESS}/business`)
+              a.nav-link(href=`/categories/${env.BUSINESS}/business`)
                 | Business 
                 span.sr-only (current)
             li.nav-item.active
-              a.nav-link(href=`/categories/${POLITICS}/politics`)
+              a.nav-link(href=`/categories/${env.POLITICS}/politics`)
                 | Politics 
                 span.sr-only (current)
             li.nav-item.active
-              a.nav-link(href=`/categories/${EDUCATION}/education`)
+              a.nav-link(href=`/categories/${env.EDUCATION}/education`)
                 | Education 
                 span.sr-only (current)
             li.nav-item.active
-              a.nav-link(href=`/categories/${HEALTH}/health`)
+              a.nav-link(href=`/categories/${env.HEALTH}/health`)
                 | Health 
                 span.sr-only (current)
             li.nav-item.active
-              a.nav-link(href=`/categories/${SPORTS}/sports`)
+              a.nav-link(href=`/categories/${env.SPORTS}/sports`)
                 | Sports 
                 span.sr-only (current)
             li.nav-item.dropdown.active
               a#dropdown01.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Other
               .dropdown-menu(aria-labelledby='dropdown01')
-                a.dropdown-item(href=`/categories/${CORONAVIRUS}/coronavirus`) Coronavirus
+                a.dropdown-item(href=`/categories/${env.CORONAVIRUS}/coronavirus`) Coronavirus
           ul.navbar-nav.mr-right
 
             //- Search form
@@ -65,7 +70,7 @@ html(lang='en')
               li.nav-item.dropdown.active
                 a#dropdown02.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') #{user.username}  
                 .dropdown-menu(aria-labelledby='dropdown02')
-                  if user.email == ADMIN_EMAIL
+                  if user.email == env.ADMIN_EMAIL
                     a.dropdown-item(href='/dashboard') Dashboard
                   a.dropdown-item(href='/users/account') Account
                   a.dropdown-item(href='/users/logout') Log Out
