@@ -32,12 +32,15 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         "default-src": ["'self'"],
+        "connect-src": ["'self'", "www.google-analytics.com"],
         "script-src": [
           "'self'",
           "code.jquery.com",
           "cdn.jsdelivr.net",
           "stackpath.bootstrapcdn.com",
           "cdnjs.cloudflare.com",
+          "www.google-analytics.com",
+          "www.googletagmanager.com",
           "'unsafe-inline'",
         ],
         "style-src": [

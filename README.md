@@ -22,7 +22,7 @@ Ro News
 
 TODO
 
-- google analytics - in progress (added gtag.js to layout.pug)
+- google analytics - in progress (added gtag.js to layout.pug; updated helmet for google analytics links)
 - SEO
 - search - in progress (search for category + pagination)
 - comments section
@@ -34,5 +34,11 @@ TODO
 Notes:
 
 - for starting the pm2: NODE_ENV=production pm2 start npm -- start --update-env
-- for deploying a new site version: additionally create config.env file
+- for deploying a new site version:
+  - before deleting folder from Digital Ocean, copy folder with images in backup folder:
+    - cp -avr articles ~/apps/backup
+  - create config.env file
+  - copy info from local file
+  - copy images folder from backup back to app folder:
+    - cp -avr ~/apps/backup/articles images
 - Email (Zoho Mail + Sendgrid): not able to open email links, due to sendgrid link behind my link - TBD how to fix it (so, no registration possible for now)
