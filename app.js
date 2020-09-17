@@ -45,13 +45,19 @@ app.use(
         ],
         "style-src": [
           "'self'",
+          "cdn.jsdelivr.net",
           "stackpath.bootstrapcdn.com",
           "cdnjs.cloudflare.com",
           "fonts.googleapis.com",
           "'unsafe-inline'",
         ],
         "font-src": ["'self'", "fonts.googleapis.com", "fonts.gstatic.com"],
-        "img-src": ["'self'", "cdnjs.cloudflare.com", "data:"],
+        "img-src": [
+          "'self'",
+          "www.google-analytics.com",
+          "cdnjs.cloudflare.com",
+          "data:",
+        ],
       },
     },
   })
