@@ -61,7 +61,11 @@ html(lang='en')
             li.nav-item.dropdown.active
               a#dropdown01.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Other
               .dropdown-menu(aria-labelledby='dropdown01')
+                a.dropdown-item(href=`/categories/${env.FINANCIAL}/financial`) Financial
+                a.dropdown-item(href=`/categories/${env.STOCK_EXCHANGE}/stock-exchange`) Stock Exchange
+                a.dropdown-item(href=`/categories/${env.SOCIAL}/social`) Social
                 a.dropdown-item(href=`/categories/${env.CORONAVIRUS}/coronavirus`) Coronavirus
+                a.dropdown-item(href='/categories') All Categories
           
           //- Right side buttons
           ul.navbar-nav.mr-right
@@ -101,7 +105,7 @@ html(lang='en')
         block content
         br
     div.footer
-      p Copyright &copy; 2020
+      p Copyright &copy; 2020 - Romanian Reporter
     
     //- Bootstrap (plus JQuery and Popper, required by Bootstrap)
     script(src='https://code.jquery.com/jquery-3.5.1.slim.min.js', integrity='sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj', crossorigin='anonymous')
@@ -134,7 +138,6 @@ html(lang='en')
           'enable cookies' : 'disable cookies');
         },
         "position": "bottom-right",
-        "theme": "classic",
         "domain": "https://romanianreporter.com/",
         "secure": true,
         "content": {

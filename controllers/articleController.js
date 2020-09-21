@@ -9,7 +9,7 @@ const { body, validationResult } = require("express-validator");
 
 // Display list of all Articles.
 exports.article_list = function (req, res, next) {
-  const pagination = req.query.pagination ? parseInt(req.query.pagination) : 10;
+  const pagination = req.query.pagination ? parseInt(req.query.pagination) : 20;
   const page = req.query.page ? parseInt(req.query.page) : 1;
   async.parallel(
     {
@@ -19,7 +19,7 @@ exports.article_list = function (req, res, next) {
           .limit(pagination)
           .populate("article")
           .populate("createdBy")
-          .sort([["createdAt", "ascending"]])
+          .sort([["createdAt", "descending"]])
           .exec(callback);
       },
 

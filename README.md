@@ -25,11 +25,11 @@ Ro News
 TODO
 
 - SEO
-- search - in progress (search for category + pagination)
 - comments section
 - newsletter
 - social media
 - logo
+- Search - in progress (search for category + pagination)
 
 Notes:
 

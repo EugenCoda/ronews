@@ -23,12 +23,6 @@ body {
   text-align: center;
 }
 
-/* For category lists - to be shown in 3 columns */
-#unorderedList {
-  list-style-type: none;
-  columns: 3;
-}
-
 .container {
   padding-top: 20px;
 }
@@ -136,4 +130,18 @@ td {
   height: 1.3em;
   margin-right: 5px;
   margin-left: 5px;
+}
+
+/* For category lists - to be shown in 3 columns */
+#unorderedList {
+  list-style-type: none;
+  columns: 3;
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+  #unorderedList {
+    list-style-type: none;
+    columns: 2;
+  }
 }

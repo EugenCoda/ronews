@@ -37,6 +37,6 @@ router.post("/:id/:slug/update", category_controller.category_update_post);
 router.get("/:id/:slug", category_controller.category_detail);
 
 // GET request for list of all Categorie.
-router.get("/", ensureAdmin, category_controller.category_list);
+router.get("/", category_controller.category_list);
 
 module.exports = router;
