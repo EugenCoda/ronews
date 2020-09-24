@@ -21,6 +21,9 @@ Ro News
 - Removed layout_ignore file (and moved categories to config.env)
 - Cookies consent
 - Google Analytics (added gtag.js to layout.pug; updated helmet for google analytics links)
+  9/24/2020
+- Fixed the sidebar articles error (caused by the links in the truncated text)
+- Separated recommended articles in a different query to DB
 
 TODO
 

@@ -16,9 +16,29 @@ exports.main_page = function (req, res, next) {
   async.parallel(
     {
       article_last: (callback) => {
-        // Show it only if it's verified or created by the logged user
-        Article.find({ $or: [{ isVerified: true }, { createdBy: req.user }] })
+        // Show it only if it's verified or created by the logged user - only NOT recommended
+        Article.find({
+          $and: [
+            { $or: [{ isVerified: true }, { createdBy: req.user }] },
+            { isRecommended: false },
+          ],
+        })
           .skip((page - 1) * pagination)
+          .limit(pagination)
+          .populate("article")
+          .populate("category")
+          .populate("createdBy")
+          .sort([["createdAt", "descending"]])
+          .exec(callback);
+      },
+      article_recommended: (callback) => {
+        // Show it only if it's verified or created by the logged user - only recommended
+        Article.find({
+          $and: [
+            { $or: [{ isVerified: true }, { createdBy: req.user }] },
+            { isRecommended: true },
+          ],
+        })
           .limit(pagination)
           .populate("article")
           .populate("category")
@@ -44,6 +64,7 @@ exports.main_page = function (req, res, next) {
         page: page,
         pagination: pagination,
         article_last: results.article_last,
+        article_recommended: results.article_recommended,
         article_count: results.article_count,
       });
     }

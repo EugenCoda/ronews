@@ -5,48 +5,48 @@ block content
   include helpers
   div(class='container-fluid')
     div(class='row')
+      //- Main Content
       div(class='col-sm-8')
         - article_last.sort(function(a, b) {let textA = a.createdAt; let textB = b.createdAt; return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
         - let i = 0;
         each article in article_last
-          if !article.isRecommended
-            if i == 0 && page == 1
-              article.article-lg
-                figure.article-thumb
-                  a(href=article.url)
-                    img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
-                each val, index in article.category
-                  a.article-tag(href=val.url) #{val.name}
-                  if index < article.category.length - 1
-                    |  
-                h2 
-                  a.article_title(href=article.url) #{article.title}
-                div
-                  p(style='display:inline') !{truncate(article.text, 300)} 
-                    |
-                    a(href=article.url) ...more
-            else
-              article.article-md
-                .container-fluid
-                  .row  
-                    .col-md-6
-                      figure.article-thumb
-                        a(href=article.url)
-                          img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
-                    .col-md-6
-                      div.article-content
-                        each val, index in article.category
-                          a.article-tag(href=val.url) #{val.name}
-                          if index < article.category.length - 1
-                            |  
-                        h5 
-                          a.article_title(href=article.url) #{article.title}
-                        div
-                          p(style='display:inline') !{truncate(article.text, 150)} ...
-                        p Published #{moment(article.createdAt).fromNow()}
-                  
-            - i++;
-            br
+          if i == 0 && page == 1
+            article.article-lg
+              figure.article-thumb
+                a(href=article.url)
+                  img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
+              each val, index in article.category
+                a.article-tag(href=val.url) #{val.name}
+                if index < article.category.length - 1
+                  |  
+              h2 
+                a.article_title(href=article.url) #{article.title}
+              div
+                p(style='display:inline') !{truncate(article.text, 300)} 
+                  |
+                  a(href=article.url) ...more
+          else
+            article.article-md
+              .container-fluid
+                .row  
+                  .col-md-6
+                    figure.article-thumb
+                      a(href=article.url)
+                        img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
+                  .col-md-6
+                    div.article-content
+                      each val, index in article.category
+                        a.article-tag(href=val.url) #{val.name}
+                        if index < article.category.length - 1
+                          |  
+                      h5 
+                        a.article_title(href=article.url) #{article.title}
+                      div
+                        p(style='display:inline') !{truncate(article.text, 150)} ...
+                      p Published #{moment(article.createdAt).fromNow()}
+                
+          - i++;
+          br
 
         //- Moved inside the 8-col div to show correctly at the bottom of the page
         //- Pagination component
@@ -152,7 +152,8 @@ block content
                     li.page-item.disabled
                       a.page-link(href='/', aria-label='Next' tabindex="-1" aria-disabled="true")
                         span(aria-hidden='true') »
-
+      
+      //- Right sidebar
       div(class='col-sm-4')
         .container-fluid
           .row
@@ -178,10 +179,9 @@ block content
             .sidebar-article
               h6.article_title Recommended Articles
               br
-              - article_last.sort(function(a, b) {let textA = a.createdAt; let textB = b.createdAt; return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
-              each article in article_last
-                if article.isRecommended
-                  article.article-md
+              - article_recommended.sort(function(a, b) {let textA = a.createdAt; let textB = b.createdAt; return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
+              each article in article_recommended
+                article.article-md
                   .container-fluid
                     .row  
                       figure.article-thumb
@@ -191,6 +191,7 @@ block content
                         h5 
                           a.article_title(href=article.url) #{article.title}
                         div
+                          //- If there is a link in the article text, it will cause an interference with the rest of the code
                           p(style='display:inline') !{truncate(article.text, 150)} ...
                     hr
 
@@ -200,7 +201,7 @@ block content
   //- Due to CORS issue, cannot fetch directly to front end, so first it is fetched to backend, then here
   script.
     window.addEventListener('DOMContentLoaded', (event) => {
-      //console.log('DOM fully loaded and parsed');
+      //- console.log('DOM fully loaded and parsed');
       function getExchangeRate(){fetch("exchange")
         .then((response) => {return response.json()})
         .then(function(data) {

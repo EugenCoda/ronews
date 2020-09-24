@@ -387,6 +387,7 @@ exports.article_detail_get = function (req, res, next) {
         return next(err);
       }
       res.render("article_detail", {
+        title: "RR | " + results.article.title,
         article: results.article,
         articles: results.articles,
       });
