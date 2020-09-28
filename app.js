@@ -1,5 +1,6 @@
 const createError = require("http-errors");
 const express = require("express");
+var favicon = require("serve-favicon");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
@@ -26,6 +27,7 @@ dotenv.config({ path: "./config/config.env" });
 connectDB();
 
 const app = express();
+app.use(favicon(path.join(__dirname, "public", "images", "favicon.ico")));
 
 app.use(
   helmet({

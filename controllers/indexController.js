@@ -60,7 +60,7 @@ exports.main_page = function (req, res, next) {
       }
       //Successful, so render
       res.render("index", {
-        title: "Romanian Reporter",
+        title: "Romanian Reporter | Relevant News About Romania In English",
         page: page,
         pagination: pagination,
         article_last: results.article_last,
@@ -113,8 +113,9 @@ exports.search = (req, res, next) => {
           // Show the item only if it's approved by admin.
           // TODO: or if it was created by the logged user (didn't manage to make it work with aggregate)
           { $match: { isVerified: true } },
+          { $sort: { createdAt: -1 } },
           {
-            $limit: 5,
+            $limit: 10,
           },
           {
             $project: {
@@ -123,6 +124,7 @@ exports.search = (req, res, next) => {
               text: 1,
               category: 1,
               slug: 1,
+              createdAt: 1,
             },
           },
         ]).exec(callback);
@@ -162,7 +164,8 @@ exports.search = (req, res, next) => {
       }
 
       res.render("search", {
-        title: "RR | Search Results",
+        title: `Search Results - ${search} | Romanian Reporter`,
+        search: search,
         articles: results.articles,
         categories: results.categories,
       });

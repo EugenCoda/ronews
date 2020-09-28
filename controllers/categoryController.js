@@ -15,7 +15,7 @@ exports.category_list = function (req, res, next) {
       }
       //Successful, so render
       res.render("category_list", {
-        title: "Categories",
+        title: "All Categories | Romanian Reporter",
         category_list: list_categories,
       });
     });
@@ -85,7 +85,7 @@ exports.category_detail = function (req, res, next) {
 
       // Successful, so render
       res.render("category_detail", {
-        title: "RR | " + results.category.name,
+        title: results.category.name + " | Romanian Reporter",
         page: page,
         pagination: pagination,
         category: results.category,

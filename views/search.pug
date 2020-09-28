@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  h3 Search Results
+  h3= `Search Results - ${search}`
   br
   .container-fluid
     .row
@@ -10,7 +10,7 @@ block content
             .row-md-6
               div.article-content
                 h6 
-                  a.article_title(href=`/articles/${article._id}/${article.slug}`) #{article.title}
+                  a.article_title(href=`/articles/${article._id}/${article.slug}`) #{article.title} | #{moment(article.createdAt).fromNow()}
             .row-md-6
               figure.article-thumb
                 a(href=`/articles/${article._id}/${article.slug}`)
