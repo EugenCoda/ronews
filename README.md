@@ -21,18 +21,27 @@ Ro News
 - Removed layout_ignore file (and moved categories to config.env)
 - Cookies consent
 - Google Analytics (added gtag.js to layout.pug; updated helmet for google analytics links)
+
   9/24/2020
+
 - Fixed the sidebar articles error (caused by the links in the truncated text)
 - Separated recommended articles in a different query to DB
+
+  9/28/2020
+
 - Added favicon
 - Search - show results chronologically + show the date
 
+  10/1/2020
+
+- Improved exchange rate box design
+
 TODO
 
+- social media - in progress (FB, Twitter)
 - SEO
 - comments section
 - newsletter
-- social media
 - logo
 - Search - in progress (search for category + pagination)
 

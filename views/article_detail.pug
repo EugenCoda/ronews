@@ -36,7 +36,7 @@ block content
           .row
             .sidebar-article
               br
-              h6.article_title Related Articles:
+              h6.sidebar_title Related Articles:
               br
               - articles.sort(function(a, b) {let textA = a.createdAt; let textB = b.createdAt; return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
               //- check each category from this article

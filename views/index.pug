@@ -159,25 +159,24 @@ block content
           .row
             .exchange_rate
               br
-              h6.article_title Exchange Rate for RON
-              p#publishingdate Date:     
+              h6.sidebar_title BNR Exchange Rate
+              p#publishingdate      
               .container-fluid
-                table.table.table-borderless.table-sm 
-                  tbody
-                    tr
-                      td#EUR 1 EUR = 
-                    tr
-                      td#USD 1 USD = 
-                    tr
-                      td#GBP 1 GBP = 
-                    if user && user.email == env.ADMIN_EMAIL
-                      tr
-                        td#MDL 1 MDL = 
-                      tr
-                        td#PLN 1 PLN = 
+                .row
+                  img(id='currency', src='/images/currencies/eur.jpg', title='euro currency', alt='euro currency') 
+                  p#EUR EUR = 
+                .row
+                  img(id='currency', src='/images/currencies/usd.jpg', title='usd currency', alt='usd currency')
+                  p#USD USD = 
+                .row
+                  img(id='currency', src='/images/currencies/gbp.jpg', title='gbp currency', alt='gbp currency')
+                  p#GBP GBP = 
+                if user && user.email == env.ADMIN_EMAIL
+                  p#MDL  MDL = 
+                  p#PLN  PLN = 
                       
             .sidebar-article
-              h6.article_title Recommended Articles
+              h6.sidebar_title Recommended Articles
               br
               - article_recommended.sort(function(a, b) {let textA = a.createdAt; let textB = b.createdAt; return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
               each article in article_recommended

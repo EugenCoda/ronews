@@ -113,6 +113,13 @@ a:hover {
   margin: 20px;
 }
 
+.sidebar_title {
+  font-size: 18px;
+  color: #0f4476;
+  border-bottom: 2px solid #0f4476;
+  padding-bottom: 3px;
+}
+
 .exchange_rate {
   margin: 20px;
 }
@@ -120,6 +127,15 @@ a:hover {
 .exchange_rate p,
 td {
   font-size: 14px;
+}
+
+#currency {
+  max-width: 100%;
+  width: 18px;
+  height: 18px;
+  vertical-align: top;
+  margin-right: 8px;
+  border: 0;
 }
 
 /* Add, edit and delete articles */
