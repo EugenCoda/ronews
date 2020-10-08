@@ -1,26 +1,65 @@
 extends layout
 
+block head
+  //- Facebook Meta 
+  meta(property='og:url' content=`https://www.romanianreporter.com/articles/${article._id}/${article.slug}`)
+  meta(property='og:type' content='website')
+  meta(property='og:title' content=`${article.title}`)
+  meta(property='og:description' content=`${article.title}`)
+  meta(property='og:image' content=`https://www.romanianreporter.com/images/articles/${article._id}.jpg`)
+  //- Twitter Meta
+  meta(name='twitter:card' content='summary_large_image')
+  meta(name='twitter:site' content='@Ro_Reporter')
+  meta(name='twitter:title' content=`${article.title}`)
+  meta(name='twitter:description' content=`${article.title}`)
+  meta(name='twitter:creator' content='@Ro_Reporter')
+  meta(name='twitter:image' content=`https://www.romanianreporter.com/images/articles/${article._id}.jpg`)
+  meta(name='twitter:domain' content=`https://www.romanianreporter.com/articles/${article._id}/${article.slug}`)
+
 block content
   include helpers
-  div(class='container-fluid')
-  h2= article.title
-  h6 #{article.createdBy.name} - #{moment(article.createdAt).format('MMM D, YYYY HH:mm')}
-  p #[strong Category:]&nbsp;
-    each val, index in article.category
-      a(href=val.url) #{val.name}
-      if index < article.category.length - 1
-        |, 
-  hr
-  div(class='container-fluid')
-    div(class='row')
-      div(class='col-sm-10')
-        div
-          img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
-  div(class='container-fluid')
-    div(class='row')
-      div(class='col-sm-8')
+  .container-fluid
+    h2= article.title
+    h6 #{article.createdBy.name} - #{moment(article.createdAt).format('MMM D, YYYY HH:mm')}
+    .container-fluid
+      .row
+        .col-sm-4
+          each val, index in article.category
+            a.article-tag(href=val.url) #{val.name}
+            if index < article.category.length - 1
+              |  
+    hr
+  .container-fluid
+    .row
+      .col-sm-10
+        img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
+  .container-fluid
+    .row
+      .col-sm-8
         div
           p!= article.text
+          .container-fluid
+            .row
+              .col-md-3
+              .col-md-2.social-media
+                //- Facebook Share Button
+                a.share-button.facebook(href=`https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fromanianreporter.com%2Farticles%2F${article._id}%2F${article.slug}&amp;src=sdkpreparse` target='_blank')
+                  svg.facebook(fill='#000000' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg')
+                    path(d='M19,4V7H17A1,1 0 0,0 16,8V10H19V13H16V20H13V13H11V10H13V7.5C13,5.56 14.57,4 16.5,4M20,2H4A2,2 0 0,0 2,4V20A2,2 0 0,0 4,22H20A2,2 0 0,0 22,20V4C22,2.89 21.1,2 20,2Z')
+                  |  Share
+              .col-md-2.social-media
+                //- Twitter Share Button
+                a.share-button.twitter(href=`https://twitter.com/intent/tweet?url=https://romanianreporter.com/articles/${article._id}/${article.slug}&text=${article.title}` target='_blank')
+                  svg.twitter(fill='#000000' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg')
+                    path(d='M22.46,6C21.69,6.35 20.86,6.58 20,6.69C20.88,6.16 21.56,5.32 21.88,4.31C21.05,4.81 20.13,5.16 19.16,5.36C18.37,4.5 17.26,4 16,4C13.65,4 11.73,5.92 11.73,8.29C11.73,8.63 11.77,8.96 11.84,9.27C8.28,9.09 5.11,7.38 3,4.79C2.63,5.42 2.42,6.16 2.42,6.94C2.42,8.43 3.17,9.75 4.33,10.5C3.62,10.5 2.96,10.3 2.38,10C2.38,10 2.38,10 2.38,10.03C2.38,12.11 3.86,13.85 5.82,14.24C5.46,14.34 5.08,14.39 4.69,14.39C4.42,14.39 4.15,14.36 3.89,14.31C4.43,16 6,17.26 7.89,17.29C6.43,18.45 4.58,19.13 2.56,19.13C2.22,19.13 1.88,19.11 1.54,19.07C3.44,20.29 5.7,21 8.12,21C16,21 20.33,14.46 20.33,8.79C20.33,8.6 20.33,8.42 20.32,8.23C21.16,7.63 21.88,6.87 22.46,6Z')
+                  |  Tweet
+              .col-md-2.social-media
+                //- LinkedIn Share Button
+                a.share-button.linkedin(href=`https://www.linkedin.com/shareArticle?mini=true&url=https://www.romanianreporter.com/articles/${article._id}/${article.slug}&title=${article.title}` onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;")
+                  svg.linkedin(fill='#000000' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg')
+                    path(d='M19,19H16V13.7A1.5,1.5 0 0,0 14.5,12.2A1.5,1.5 0 0,0 13,13.7V19H10V10H13V11.2C13.5,10.36 14.59,9.8 15.5,9.8A3.5,3.5 0 0,1 19,13.3M6.5,8.31C5.5,8.31 4.69,7.5 4.69,6.5A1.81,1.81 0 0,1 6.5,4.69C7.5,4.69 8.31,5.5 8.31,6.5A1.81,1.81 0 0,1 6.5,8.31M8,19H5V10H8M20,2H4C2.89,2 2,2.89 2,4V20A2,2 0 0,0 4,22H20A2,2 0 0,0 22,20V4C22,2.89 21.1,2 20,2Z')
+                  |  LinkedIn
+              .col-md-3
         //- Upload Image Form
         if user && user.email == article.createdBy.email
           hr
@@ -31,7 +70,7 @@ block content
             input(type='file', accept='image/*', name=article._id)
             input(type='submit', value='upload')
           hr
-      div(class='col-sm-4')
+      .col-sm-4
         .container-fluid
           .row
             .sidebar-article
@@ -40,15 +79,19 @@ block content
               br
               - articles.sort(function(a, b) {let textA = a.createdAt; let textB = b.createdAt; return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
               //- check each category from this article
+              - let i = 0;
               each val in article.category
-                //- check each article from the latest articles from DB - currently limit set to 30 (articleController)
+                //- check each article from the latest articles from DB 
+                //- currently limit set to 30 (articleController)
                 each cat_article in articles
                   //- exclude this article from the list
                   if cat_article.id!=article.id
                     //- check each category from the article from DB
                     each value in cat_article.category
-                      //- if it matches with the category from this article, show article from DB
-                      if value.id==val.id
+                      //- if it matches with the category from this article, show article from DB 
+                      //- currently limited to 5(shows articles from first category first)
+                      if (value.id==val.id) && i < 5
+                        - i++;
                         article.article-md
                           .container-fluid
                             .row  
@@ -60,7 +103,7 @@ block content
                                   a.article_title(href=cat_article.url) #{cat_article.title}
                                 div
                                   p(style='display:inline') !{truncate(cat_article.text, 150)} ...
-                          hr
+                        hr
   if user && user.email == article.createdBy.email
     a.btn.btn-dark(href=article.url+'/update') Edit
     | 

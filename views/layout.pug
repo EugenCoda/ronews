@@ -5,6 +5,9 @@ html(lang='en')
     title= title
     meta(charset='utf-8')
     meta(name='viewport', content='width=device-width, initial-scale=1')
+    
+    block head
+
     //- Google Analytics
     // Global site tag (gtag.js) - Google Analytics
     script(async='', src='https://www.googletagmanager.com/gtag/js?id=UA-177935671-1')
@@ -15,6 +18,8 @@ html(lang='en')
       gtag('config', 'UA-177935671-1');
     //- Cookie Consent
     link(rel='stylesheet', type='text/css', href='https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css')
+    //- Font Awesome
+    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css')
     //- Bootstrap
     link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css', integrity='sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z', crossorigin='anonymous')
     //- My CSS file
@@ -23,7 +28,7 @@ html(lang='en')
     link(href='https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap', rel='stylesheet')
 
   body
-
+        
     .app_body
 
       //- Navbar
@@ -82,8 +87,8 @@ html(lang='en')
               
             if user
               li.nav-item.dropdown.active
-                a#dropdown02.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') #{user.username}  
-                .dropdown-menu(aria-labelledby='dropdown02')
+                a#dropdown-user.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') #{user.username}  
+                .dropdown-menu(aria-labelledby='dropdown-user')
                   if user.email == env.ADMIN_EMAIL
                     a.dropdown-item(href='/dashboard') Dashboard
                   a.dropdown-item(href='/users/account') Account
@@ -105,7 +110,22 @@ html(lang='en')
         block content
         br
   footer
-    p Copyright &copy; 2020 - Romanian Reporter
+    .container
+      .row
+        #copyright.col-sm-8
+          p Copyright &copy; 2020 - Romanian Reporter
+        #social-media-footer.col-sm-4
+          a(href='https://facebook.com/RomanianReporter/' target='_blank' title='facebook', alt='facebook') 
+            i.fab.fa-facebook
+          a(href='https://twitter.com/Ro_Reporter' target='_blank' title='twitter', alt='twitter') 
+            i.fab.fa-twitter
+          a(href='https://www.instagram.com/romanianreporter/' target='_blank' title='instagram', alt='instagram') 
+            i.fab.fa-instagram
+          a(href='#' target='_blank' title='pinterest', alt='pinterest') 
+            i.fab.fa-pinterest
+          a(href='#' target='_blank' title='linkedin', alt='linkedin') 
+            i.fab.fa-linkedin-in
+   
     
     //- Bootstrap (plus JQuery and Popper, required by Bootstrap)
     script(src='https://code.jquery.com/jquery-3.5.1.slim.min.js', integrity='sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj', crossorigin='anonymous')
@@ -117,6 +137,7 @@ html(lang='en')
     script.
       CKEDITOR.replace('text')
     script(src='https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js', data-cfasync='false')
+    
     
     //- Cookie Consent
     #cookieconsent

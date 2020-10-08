@@ -12,7 +12,7 @@ block content
         th(scope='col') isRecommended 
 
     tbody
-      - articles.sort(function(a, b) {let textA = a.title.toUpperCase(); let textB = b.title.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+      - articles.sort(function(a, b) {let textA = a.createdAt; let textB = b.createdAt; return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
       //- Loops through each article from the article list.
       each article in articles
 

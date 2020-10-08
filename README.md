@@ -36,9 +36,12 @@ Ro News
 
 - Improved exchange rate box design
 
+  10/8/2020
+
+- Added social media buttons
+
 TODO
 
-- social media - in progress (FB, Twitter)
 - SEO
 - comments section
 - newsletter
