@@ -19,7 +19,7 @@ block content
                 a.article-tag(href=val.url) #{val.name}
                 if index < article.category.length - 1
                   |  
-              h2 
+              h1(style='font-size: 2rem;') 
                 a.article_title(href=article.url) #{article.title}
               div
                 p(style='display:inline') !{truncate(article.text, 300)} 

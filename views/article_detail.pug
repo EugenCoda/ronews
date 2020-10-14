@@ -19,7 +19,7 @@ block head
 block content
   include helpers
   .container-fluid
-    h2= article.title
+    h1(style='font-size: 2rem;')= article.title
     h6 #{article.createdBy.name} - #{moment(article.createdAt).format('MMM D, YYYY HH:mm')}
     .container-fluid
       .row
