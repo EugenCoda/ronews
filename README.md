@@ -40,6 +40,11 @@ Ro News
 
 - Added social media buttons
 
+  10/14/2020
+
+- Added sitemap
+- Changed page title tag to h1
+
 TODO
 
 - SEO
