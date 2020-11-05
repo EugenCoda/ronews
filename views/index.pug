@@ -43,6 +43,7 @@ block content
                         a.article_title(href=article.url) #{article.title}
                       div
                         p(style='display:inline') !{truncate(article.text, 150)} ...
+                      br
                       p Published #{moment(article.createdAt).fromNow()}
                 
           - i++;

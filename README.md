@@ -45,6 +45,10 @@ Ro News
 - Added sitemap
 - Changed page title tag to h1
 
+  11/5/2020
+
+- Cleared html tags from truncated texts
+
 TODO
 
 - SEO
