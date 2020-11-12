@@ -1,6 +1,8 @@
 extends layout
 
 block head
+  //- Page Meta Description
+  meta(name='description' content=`${article.title}`)
   //- Facebook Meta 
   meta(property='og:url' content=`https://www.romanianreporter.com/articles/${article._id}/${article.slug}`)
   meta(property='og:type' content='website')
@@ -15,6 +17,9 @@ block head
   meta(name='twitter:creator' content='@Ro_Reporter')
   meta(name='twitter:image' content=`https://www.romanianreporter.com/images/articles/${article._id}.jpg`)
   meta(name='twitter:domain' content=`https://www.romanianreporter.com/articles/${article._id}/${article.slug}`)
+
+  //- Canonical
+  link(rel='canonical' href=`https://romanianreporter.com/articles/${article._id}/${article.slug}`)
 
 block content
   include helpers

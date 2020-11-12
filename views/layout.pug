@@ -132,14 +132,18 @@ html(lang='en')
     script(src='https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js', integrity='sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN', crossorigin='anonymous')
     script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js', integrity='sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV', crossorigin='anonymous')
     
-    //- CK Editor
+    //- CK Editor + CKFinder(for image upload)
     script(src='https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.14.1/ckeditor.js', integrity='sha512-P4rrEImABBYtBFdmrFPqF8rjh8iiRiupfQ4KLrBCL8dAivLiM2nh+1bJQeMb2ZglmIlGZdfTtgGdXH6H/hGVeg==', crossorigin='anonymous')
     script.
-      CKEDITOR.replace('text')
+      CKEDITOR.replace('text', {
+        filebrowserBrowseUrl: '/ckfinder/ckfinder.html',
+        filebrowserUploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files'
+      })
+
+
+    //- Cookie Consent
     script(src='https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js', data-cfasync='false')
     
-    
-    //- Cookie Consent
     #cookieconsent
 
     script.

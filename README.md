@@ -49,6 +49,12 @@ Ro News
 
 - Cleared html tags from truncated texts
 
+  11/12/2020
+
+- Added canonical to article_detail, category_details and category_list
+- Added meta description to index, article_detail, category_details and category_list
+- Added CKFinder (file uploader)
+
 TODO
 
 - SEO

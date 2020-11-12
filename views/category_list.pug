@@ -1,5 +1,11 @@
 extends layout
 
+block head
+  //- Category page meta description
+  meta(name='description' content='We bring you the most important news of the day about Romania in English; the latest news in all categories')
+  //- Canonical
+  link(rel='canonical' href=`https://romanianreporter.com/categories`)
+
 block content
   h3 Categories
   hr
