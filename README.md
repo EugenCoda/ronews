@@ -54,6 +54,14 @@ Ro News
 - Added canonical to article_detail, category_details and category_list
 - Added meta description to index, article_detail, category_details and category_list
 - Added CKFinder (file uploader)
+- Updated sitemap
+
+  3/12/2020
+
+- Added image uploader(multer) to the admin dashboard - for inserting images inside an article
+- Moved exchange rate and pagination in separate file
+- Fixed the sorting of articles for a category
+- Tweaked the published date, title font size, article image size, sidebar article format
 
 TODO
 

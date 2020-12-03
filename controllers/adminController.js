@@ -2,6 +2,9 @@ var Article = require("../models/article");
 var Category = require("../models/category");
 var Comment = require("../models/comment");
 var async = require("async");
+var multer = require("multer");
+const path = require("path");
+const fs = require("fs");
 
 // Display Dashboard on GET.
 exports.admin_dashboard_get = (req, res, next) => {
@@ -43,10 +46,26 @@ exports.admin_dashboard_get = (req, res, next) => {
       },
     },
     (err, results) => {
-      res.render("admin_dashboard", {
-        title: "Dashboard",
-        error: err,
-        data: results,
+      //Reading all files from the "uploads" folder
+      fs.readdir("public/images/articles/uploads", function (err, files) {
+        //Handling error
+        if (err) {
+          return console.log("Unable to scan directory: " + err);
+        }
+        //Add all images from the "uploads" folder to an array
+        var imgFiles = [];
+        files.forEach((file) => {
+          var imgpath = "images/articles/uploads/" + file;
+          // Adds the latest image at the beginning of the array
+          imgFiles.unshift(imgpath);
+        });
+
+        res.render("admin_dashboard", {
+          title: "Dashboard",
+          error: err,
+          data: results,
+          imgFiles: imgFiles,
+        });
       });
     }
   );
@@ -275,3 +294,218 @@ exports.admin_comments_post = (req, res, next) => {
     }
   );
 };
+
+// Handle Upload Image for inside a specific Article on POST.
+
+exports.admin_dashboard_post = [
+  (req, res, next) => {
+    // Set Storage Engine
+    const storage = multer.diskStorage({
+      destination: "public/images/articles/uploads",
+      // Adds date in front of the image name
+      filename: function (req, file, cb) {
+        cb(null, Date.now() + "-" + file.originalname);
+      },
+    });
+
+    //Init Upload
+    const upload = multer({
+      storage: storage,
+      limits: { fileSize: 1000000 },
+      fileFilter: function (req, file, cb) {
+        checkFileType(file, cb);
+      },
+    }).single("photo");
+
+    // Check File Type
+    function checkFileType(file, cb) {
+      // Allowed ext
+      const filetypes = /jpeg|jpg|png|gif/;
+      // Check ext
+      const extname = filetypes.test(
+        path.extname(file.originalname).toLowerCase()
+      );
+      // Check mime
+      const mimetype = filetypes.test(file.mimetype);
+
+      if (mimetype && extname) {
+        return cb(null, true);
+      } else {
+        cb("Error: Images Only!");
+      }
+    }
+
+    // req.file is the `photo` file
+    // req.body will hold the text fields, if there were any
+    upload(req, res, (err) => {
+      if (err) {
+        async.parallel(
+          {
+            // All items from DB
+            article_count: (callback) => {
+              Article.countDocuments({}, callback); // Pass an empty object as match condition to find all documents of this collection
+            },
+            category_count: (callback) => {
+              Category.countDocuments({}, callback);
+            },
+            comment_count: (callback) => {
+              Comment.countDocuments({}, callback);
+            },
+            // All approved items
+            article_count_approved: (callback) => {
+              Article.countDocuments({ isVerified: true }, callback);
+            },
+            category_count_approved: (callback) => {
+              Category.countDocuments({ isVerified: true }, callback);
+            },
+            comment_count_approved: (callback) => {
+              Comment.countDocuments({ isVerified: true }, callback);
+            },
+            // All pending items
+            article_count_pending: (callback) => {
+              Article.countDocuments({ isVerified: false }, callback);
+            },
+            category_count_pending: (callback) => {
+              Category.countDocuments({ isVerified: false }, callback);
+            },
+            comment_count_pending: (callback) => {
+              Comment.countDocuments({ isVerified: false }, callback);
+            },
+            // All recommended articles
+            article_count_recommended: (callback) => {
+              Article.countDocuments({ isRecommended: true }, callback);
+            },
+          },
+          (error, results) => {
+            if (error) {
+              return next(error);
+            }
+            req.flash("danger", err.toString());
+            res.redirect("/dashboard");
+            return;
+          }
+        );
+      } else {
+        if (req.file == undefined) {
+          async.parallel(
+            {
+              // All items from DB
+              article_count: (callback) => {
+                Article.countDocuments({}, callback); // Pass an empty object as match condition to find all documents of this collection
+              },
+              category_count: (callback) => {
+                Category.countDocuments({}, callback);
+              },
+              comment_count: (callback) => {
+                Comment.countDocuments({}, callback);
+              },
+              // All approved items
+              article_count_approved: (callback) => {
+                Article.countDocuments({ isVerified: true }, callback);
+              },
+              category_count_approved: (callback) => {
+                Category.countDocuments({ isVerified: true }, callback);
+              },
+              comment_count_approved: (callback) => {
+                Comment.countDocuments({ isVerified: true }, callback);
+              },
+              // All pending items
+              article_count_pending: (callback) => {
+                Article.countDocuments({ isVerified: false }, callback);
+              },
+              category_count_pending: (callback) => {
+                Category.countDocuments({ isVerified: false }, callback);
+              },
+              comment_count_pending: (callback) => {
+                Comment.countDocuments({ isVerified: false }, callback);
+              },
+              // All recommended articles
+              article_count_recommended: (callback) => {
+                Article.countDocuments({ isRecommended: true }, callback);
+              },
+            },
+            (error, results) => {
+              if (error) {
+                return next(error);
+              }
+
+              req.flash("danger", "No file selected!");
+              res.redirect("/dashboard");
+              return;
+            }
+          );
+        } else {
+          async.parallel(
+            {
+              // All items from DB
+              article_count: (callback) => {
+                Article.countDocuments({}, callback); // Pass an empty object as match condition to find all documents of this collection
+              },
+              category_count: (callback) => {
+                Category.countDocuments({}, callback);
+              },
+              comment_count: (callback) => {
+                Comment.countDocuments({}, callback);
+              },
+              // All approved items
+              article_count_approved: (callback) => {
+                Article.countDocuments({ isVerified: true }, callback);
+              },
+              category_count_approved: (callback) => {
+                Category.countDocuments({ isVerified: true }, callback);
+              },
+              comment_count_approved: (callback) => {
+                Comment.countDocuments({ isVerified: true }, callback);
+              },
+              // All pending items
+              article_count_pending: (callback) => {
+                Article.countDocuments({ isVerified: false }, callback);
+              },
+              category_count_pending: (callback) => {
+                Category.countDocuments({ isVerified: false }, callback);
+              },
+              comment_count_pending: (callback) => {
+                Comment.countDocuments({ isVerified: false }, callback);
+              },
+              // All recommended articles
+              article_count_recommended: (callback) => {
+                Article.countDocuments({ isRecommended: true }, callback);
+              },
+            },
+            (error, results) => {
+              if (error) {
+                return next(error);
+              }
+
+              //Reading all files from the "uploads" folder
+              fs.readdir(
+                "public/images/articles/uploads",
+                function (err, files) {
+                  //Handling error
+                  if (err) {
+                    return console.log("Unable to scan directory: " + err);
+                  }
+                  //Add all images from the "uploads" folder to an array
+                  var imgFiles = [];
+                  files.forEach((file) => {
+                    var imgpath = "images/articles/uploads/" + file;
+                    imgFiles.unshift(imgpath);
+                  });
+                  // Re-render the dashboard, passing the images array
+                  req.flash("success", "File Uploaded!");
+                  res.render("admin_dashboard", {
+                    title: "Dashboard",
+                    error: error,
+                    data: results,
+                    imgFiles: imgFiles,
+                  });
+                }
+              );
+              return;
+            }
+          );
+        }
+      }
+    });
+  },
+];

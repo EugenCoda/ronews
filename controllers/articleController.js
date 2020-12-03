@@ -189,15 +189,16 @@ exports.article_delete_post = function (req, res, next) {
         return next(err);
       }
       // Success
-      Article.findByIdAndRemove(req.body.articleid, function deleteArticle(
-        err
-      ) {
-        if (err) {
-          return next(err);
+      Article.findByIdAndRemove(
+        req.body.articleid,
+        function deleteArticle(err) {
+          if (err) {
+            return next(err);
+          }
+          // Success - go to article list
+          res.redirect("/articles");
         }
-        // Success - go to article list
-        res.redirect("/articles");
-      });
+      );
     }
   );
 };

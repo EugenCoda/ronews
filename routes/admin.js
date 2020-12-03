@@ -10,6 +10,9 @@ var admin_controller = require("../controllers/adminController");
 // GET Dashboard
 router.get("/", ensureAdmin, admin_controller.admin_dashboard_get);
 
+// POST Dashboard - for uploading an image
+router.post("/", ensureAdmin, admin_controller.admin_dashboard_post);
+
 // GET Pending Articles
 router.get("/articles", ensureAdmin, admin_controller.admin_articles_get);
 

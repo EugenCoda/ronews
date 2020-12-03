@@ -9,29 +9,39 @@ block head
 block content
 
   include helpers
-  div(class='container-fluid')
-    div(class='row')
-      div(class='col-sm-8')  
-        h3 #{category.name}
-        hr
+  .container-fluid
+    .row
+      .col-sm-8 
+        h1.sidebar_title #{category.name}
+        br
         - category_articles.sort(function(a, b) {let textA = a.createdAt; let textB = b.createdAt; return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
         - let i = 0;
         each article in category_articles
-          if i == 0
+          if i == 0 && page == 1
             article.article-lg
-              figure.article-thumb
-                a(href=article.url)
-                  img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
-              each val, index in article.category
-                a.article-tag(href=val.url) #{val.name}
-                if index < article.category.length - 1
-                  |  
-              h2 
-                a.article_title(href=article.url) #{article.title}
-              div
-                p(style='display:inline') !{truncate(article.text, 300)} 
-                  |
-                  a(href=article.url) ...more
+              .container-fluid
+                  .row  
+                    .col-md
+                      figure.article-thumb
+                        a(href=article.url)
+                          img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
+                      each val, index in article.category
+                        a.article-tag(href=val.url) #{val.name}
+                        if index < article.category.length - 1
+                          |  
+                      h1 
+                        a.article_title(href=article.url) #{article.title}
+                      div
+                        span.published-date 
+                          i.far.fa-clock
+                          | 
+                          | #{moment(article.createdAt).format('LL')}
+                      br
+                      div
+                        p(style='display:inline') !{truncate(article.text, 300)} 
+                          |
+                          a(href=article.url) ...more
+                      br
           else
             article.article-md
               .container-fluid
@@ -49,116 +59,25 @@ block content
                       h5 
                         a.article_title(href=article.url) #{article.title}
                       div
+                        span.published-date 
+                          i.far.fa-clock
+                          | 
+                          | #{moment(article.createdAt).format('LL')}
+                      br
+                      div
                         p(style='display:inline') !{truncate(article.text, 150)} 
-                      p Published #{moment(article.createdAt).fromNow()}
                 
           - i++;
           br
-      div(class='col-sm-4')
+      //- Right sidebar
+      .col-sm-4
+        .container-fluid
+          .row
+            //- it is fetched through index controller, not working here
+            //- include template_exchange
 
     //- Pagination component
-    nav(aria-label='Category detail page')
-      //- There are more items in db than the ones showed on page
-      if category_article_count > pagination
-        ul.pagination
-          //- There are no more than 2 pages needed
-          if category_article_count <= (2 * pagination)
-            //- We are on page 1, disable "previous", enable "next" and manually index the 2 pages
-            if page == 1
-              li.page-item.disabled
-                a.page-link(href=`${category._id}`, aria-label='Previous' tabindex="-1" aria-disabled="true")
-                  span(aria-hidden='true') «
-              li.page-item.active(aria-current='page')
-                a.page-link(href=`${category._id}?page=1&pagination=${pagination}`) 1
-                  span.sr-only (current)
-              li.page-item
-                a.page-link(href=`${category._id}?page=2&pagination=${pagination}`) 2
-              li.page-item
-                a.page-link(href=`${category._id}?page=2&pagination=${pagination}`, aria-label='Next')
-                  span(aria-hidden='true') »
-            //- We are on page 2, enable "previous", disable "next" and manually index the 2 pages
-            else
-              li.page-item
-                a.page-link(href=`${category._id}?page=1&pagination=${pagination}`, aria-label='Previous')
-                  span(aria-hidden='true') «
-              li.page-item
-                a.page-link(href=`${category._id}?page=1&pagination=${pagination}`) 1
-              li.page-item.active(aria-current='page')
-                a.page-link(href=`${category._id}?page=2&pagination=${pagination}`) 2
-                  span.sr-only (current)
-              li.page-item.disabled
-                a.page-link(href=`${category._id}`, aria-label='Next' tabindex="-1" aria-disabled="true")
-                  span(aria-hidden='true') »
-          //- There are more than 2 pages needed
-          else
-            //- We are on page 1, disable "previous", enable "next", "last" and manually index the 3 pages
-            if page <= 1
-              li.page-item.disabled
-                a.page-link(href=`${category._id}`, aria-label='Previous' tabindex="-1" aria-disabled="true")
-                  span(aria-hidden='true') «
-              li.page-item.active(aria-current='page')
-                a.page-link(href=`${category._id}?page=1&pagination=${pagination}`) 1
-                  span.sr-only (current)
-              li.page-item
-                a.page-link(href=`${category._id}?page=2&pagination=${pagination}`) 2
-              li.page-item
-                a.page-link(href=`${category._id}?page=3&pagination=${pagination}`) 3
-              li.page-item
-                a.page-link(href=`${category._id}?page=2&pagination=${pagination}`, aria-label='Next')
-                  span(aria-hidden='true') »
-              if (Number.isInteger(category_article_count/pagination))
-                li.page-item
-                  a.page-link(href=`${category._id}?page=${Math.floor(category_article_count/pagination)}&pagination=${pagination}`, aria-label='Last')
-                    span(aria-hidden='true') Last »»
-              else
-                li.page-item
-                  a.page-link(href=`${category._id}?page=${Math.floor(category_article_count/pagination) + 1}&pagination=${pagination}`, aria-label='Last')
-                    span(aria-hidden='true') Last »»
-            else
-              //- We are on page 2 or more, enable "first", "previous", "next" and "last", index the 3 pages
-              if category_article_count > (page * pagination)
-                li.page-item
-                  a.page-link(href=`${category._id}?page=1&pagination=${pagination}`, aria-label='First')
-                    span(aria-hidden='true') «« First
-                li.page-item
-                  a.page-link(href=`${category._id}?page=${page-1}&pagination=${pagination}`, aria-label='Previous')
-                    span(aria-hidden='true') «
-                li.page-item
-                  a.page-link(href=`${category._id}?page=${page-1}&pagination=${pagination}`) #{page-1}  
-                li.page-item.active(aria-current='page')
-                  a.page-link(href=`${category._id}?page=${page}&pagination=${pagination}`) #{page}  
-                    span.sr-only (current)
-                li.page-item
-                  a.page-link(href=`${category._id}?page=${page+1}&pagination=${pagination}`) #{page+1}  
-                li.page-item
-                  a.page-link(href=`${category._id}?page=${page+1}&pagination=${pagination}`, aria-label='Next')
-                    span(aria-hidden='true') »
-                if (Number.isInteger(category_article_count/pagination))
-                  li.page-item
-                    a.page-link(href=`${category._id}?page=${Math.floor(category_article_count/pagination)}&pagination=${pagination}`, aria-label='Last')
-                      span(aria-hidden='true') Last »»
-                else
-                  li.page-item
-                    a.page-link(href=`${category._id}?page=${Math.floor(category_article_count/pagination) + 1}&pagination=${pagination}`, aria-label='Last')
-                      span(aria-hidden='true') Last »»
-              //- We are on the last page, enable "first" and "previous", disable "next", index the 3 pages starting from the last one
-              else
-                li.page-item
-                  a.page-link(href=`${category._id}?page=1&pagination=${pagination}`, aria-label='First')
-                    span(aria-hidden='true') «« First
-                li.page-item
-                  a.page-link(href=`${category._id}?page=${page-1}&pagination=${pagination}`, aria-label='Previous')
-                    span(aria-hidden='true') «
-                li.page-item
-                  a.page-link(href=`${category._id}?page=${page-2}&pagination=${pagination}`) #{page-2}  
-                li.page-item
-                  a.page-link(href=`${category._id}?page=${page-1}&pagination=${pagination}`) #{page-1}  
-                li.page-item.active(aria-current='page')
-                  a.page-link(href=`${category._id}?page=${page}&pagination=${pagination}`) #{page}  
-                    span.sr-only (current)
-                li.page-item.disabled
-                  a.page-link(href=`${category._id}`, aria-label='Next' tabindex="-1" aria-disabled="true")
-                    span(aria-hidden='true') »
+    include template_pagination_categories
 
   if user
     hr

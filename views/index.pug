@@ -7,28 +7,37 @@ block head
 block content
  
   include helpers
-  div(class='container-fluid')
-    div(class='row')
+  .container-fluid
+    .row
       //- Main Content
-      div(class='col-sm-8')
+      .col-sm-8
         - article_last.sort(function(a, b) {let textA = a.createdAt; let textB = b.createdAt; return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
         - let i = 0;
         each article in article_last
           if i == 0 && page == 1
             article.article-lg
-              figure.article-thumb
-                a(href=article.url)
-                  img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
-              each val, index in article.category
-                a.article-tag(href=val.url) #{val.name}
-                if index < article.category.length - 1
-                  |  
-              h1(style='font-size: 2rem;') 
-                a.article_title(href=article.url) #{article.title}
-              div
-                p(style='display:inline') !{truncate(article.text, 300)} 
-                  |
-                  a(href=article.url) ...more
+              .container-fluid
+                .row  
+                  .col-md
+                    figure.article-thumb
+                      a(href=article.url)
+                        img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
+                    each val, index in article.category
+                      a.article-tag(href=val.url) #{val.name}
+                      if index < article.category.length - 1
+                        |  
+                    h1 
+                      a.article_title(href=article.url) #{article.title}
+                    div
+                      span.published-date 
+                        i.far.fa-clock
+                        | 
+                        | #{moment(article.createdAt).format('LL')}
+                    br
+                    div
+                      p(style='display:inline') !{truncate(article.text, 300)} 
+                        |
+                        a(href=article.url) ...more
           else
             article.article-md
               .container-fluid
@@ -46,140 +55,27 @@ block content
                       h5 
                         a.article_title(href=article.url) #{article.title}
                       div
-                        p(style='display:inline') !{truncate(article.text, 150)} ...
+                        span.published-date 
+                          i.far.fa-clock
+                          | 
+                          | #{moment(article.createdAt).format('LL')}
                       br
-                      p Published #{moment(article.createdAt).fromNow()}
-                
+                      div
+                        p(style='display:inline') !{truncate(article.text, 150)} ...
           - i++;
           br
 
         //- Moved inside the 8-col div to show correctly at the bottom of the page
         //- Pagination component
-        nav(aria-label='Main page')
-          //- There are more items in db than the ones showed on page
-          if article_count > pagination
-            ul.pagination
-              //- There are no more than 2 pages needed
-              if article_count <= (2 * pagination)
-                //- We are on page 1, disable "previous", enable "next" and manually index the 2 pages
-                if page == 1
-                  li.page-item.disabled
-                    a.page-link(href='/', aria-label='Previous' tabindex="-1" aria-disabled="true")
-                      span(aria-hidden='true') «
-                  li.page-item.active(aria-current='page')
-                    a.page-link(href=`/?page=1&pagination=${pagination}`) 1
-                      span.sr-only (current)
-                  li.page-item
-                    a.page-link(href=`/?page=2&pagination=${pagination}`) 2
-                  li.page-item
-                    a.page-link(href=`/?page=2&pagination=${pagination}`, aria-label='Next')
-                      span(aria-hidden='true') »
-                //- We are on page 2, enable "previous", disable "next" and manually index the 2 pages
-                else
-                  li.page-item
-                    a.page-link(href=`/?page=1&pagination=${pagination}`, aria-label='Previous')
-                      span(aria-hidden='true') «
-                  li.page-item
-                    a.page-link(href=`/?page=1&pagination=${pagination}`) 1
-                  li.page-item.active(aria-current='page')
-                    a.page-link(href=`/?page=2&pagination=${pagination}`) 2
-                      span.sr-only (current)
-                  li.page-item.disabled
-                    a.page-link(href='/', aria-label='Next' tabindex="-1" aria-disabled="true")
-                      span(aria-hidden='true') »
-              //- There are more than 2 pages needed
-              else
-                //- We are on page 1, disable "previous", enable "next", "last" and manually index the 3 pages
-                if page <= 1
-                  li.page-item.disabled
-                    a.page-link(href='/', aria-label='Previous' tabindex="-1" aria-disabled="true")
-                      span(aria-hidden='true') «
-                  li.page-item.active(aria-current='page')
-                    a.page-link(href=`/?page=1&pagination=${pagination}`) 1
-                      span.sr-only (current)
-                  li.page-item
-                    a.page-link(href=`/?page=2&pagination=${pagination}`) 2
-                  li.page-item
-                    a.page-link(href=`/?page=3&pagination=${pagination}`) 3
-                  li.page-item
-                    a.page-link(href=`/?page=2&pagination=${pagination}`, aria-label='Next')
-                      span(aria-hidden='true') »
-                  if (Number.isInteger(article_count/pagination))
-                    li.page-item
-                      a.page-link(href=`/?page=${Math.floor(article_count/pagination)}&pagination=${pagination}`, aria-label='Last')
-                        span(aria-hidden='true') Last »»
-                  else
-                    li.page-item
-                      a.page-link(href=`/?page=${Math.floor(article_count/pagination) + 1}&pagination=${pagination}`, aria-label='Last')
-                        span(aria-hidden='true') Last »»
-                else
-                  //- We are on page 2 or more, enable "first", "previous", "next" and "last", index the 3 pages
-                  if article_count > (page * pagination)
-                    li.page-item
-                      a.page-link(href=`/?page=1&pagination=${pagination}`, aria-label='First')
-                        span(aria-hidden='true') «« First
-                    li.page-item
-                      a.page-link(href=`/?page=${page-1}&pagination=${pagination}`, aria-label='Previous')
-                        span(aria-hidden='true') «
-                    li.page-item
-                      a.page-link(href=`/?page=${page-1}&pagination=${pagination}`) #{page-1}  
-                    li.page-item.active(aria-current='page')
-                      a.page-link(href=`/?page=${page}&pagination=${pagination}`) #{page}  
-                        span.sr-only (current)
-                    li.page-item
-                      a.page-link(href=`/?page=${page+1}&pagination=${pagination}`) #{page+1}  
-                    li.page-item
-                      a.page-link(href=`/?page=${page+1}&pagination=${pagination}`, aria-label='Next')
-                        span(aria-hidden='true') »
-                    if (Number.isInteger(article_count/pagination))
-                      li.page-item
-                        a.page-link(href=`/?page=${Math.floor(article_count/pagination)}&pagination=${pagination}`, aria-label='Last')
-                          span(aria-hidden='true') Last »»
-                    else
-                      li.page-item
-                        a.page-link(href=`/?page=${Math.floor(article_count/pagination) + 1}&pagination=${pagination}`, aria-label='Last')
-                          span(aria-hidden='true') Last »»
-                  //- We are on the last page, enable "first" and "previous", disable "next", index the 3 pages starting from the last one
-                  else
-                    li.page-item
-                      a.page-link(href=`/?page=1&pagination=${pagination}`, aria-label='First')
-                        span(aria-hidden='true') «« First
-                    li.page-item
-                      a.page-link(href=`/?page=${page-1}&pagination=${pagination}`, aria-label='Previous')
-                        span(aria-hidden='true') «
-                    li.page-item
-                      a.page-link(href=`/?page=${page-2}&pagination=${pagination}`) #{page-2}  
-                    li.page-item
-                      a.page-link(href=`/?page=${page-1}&pagination=${pagination}`) #{page-1}  
-                    li.page-item.active(aria-current='page')
-                      a.page-link(href=`/?page=${page}&pagination=${pagination}`) #{page}  
-                        span.sr-only (current)
-                    li.page-item.disabled
-                      a.page-link(href='/', aria-label='Next' tabindex="-1" aria-disabled="true")
-                        span(aria-hidden='true') »
+        include template_pagination      
       
       //- Right sidebar
-      div(class='col-sm-4')
+      .col-sm-4
         .container-fluid
           .row
-            .exchange_rate
-              br
-              h6.sidebar_title BNR Exchange Rate
-              p#publishingdate      
-              .container-fluid
-                .row
-                  img(id='currency', src='/images/currencies/eur.jpg', title='euro currency', alt='euro currency') 
-                  p#EUR EUR = 
-                .row
-                  img(id='currency', src='/images/currencies/usd.jpg', title='usd currency', alt='usd currency')
-                  p#USD USD = 
-                .row
-                  img(id='currency', src='/images/currencies/gbp.jpg', title='gbp currency', alt='gbp currency')
-                  p#GBP GBP = 
-                if user && user.email == env.ADMIN_EMAIL
-                  p#MDL  MDL = 
-                  p#PLN  PLN = 
-                      
+            //- Exchange Rate
+            include template_exchange
+            //- Recommended Articles
             .sidebar-article
               h6.sidebar_title Recommended Articles
               br
@@ -188,36 +84,20 @@ block content
                 article.article-md
                   .container-fluid
                     .row  
-                      figure.article-thumb
-                        a(href=article.url)
-                          img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
                       div.article-content
                         h5 
                           a.article_title(href=article.url) #{article.title}
                         div
-                          //- If there is a link in the article text, it will cause an interference with the rest of the code
-                          p(style='display:inline') !{truncate(article.text, 150)} ...
+                          span.published-date 
+                            i.far.fa-clock
+                            | 
+                            | #{moment(article.createdAt).format('LL')}
+                        br
+                      figure.article-thumb
+                        a(href=article.url)
+                          img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
                     hr
 
     
   
-  //- Display Exchange Rate
-  //- Due to CORS issue, cannot fetch directly to front end, so first it is fetched to backend, then here
-  script.
-    window.addEventListener('DOMContentLoaded', (event) => {
-      //- console.log('DOM fully loaded and parsed');
-      function getExchangeRate(){fetch("exchange")
-        .then((response) => {return response.json()})
-        .then(function(data) {
-          let exchange_rate = data;
-          document.getElementById('publishingdate').textContent += exchange_rate.elements[0].elements[0].elements[1].elements[0].text;
-          document.getElementById('EUR').textContent += exchange_rate.elements[0].elements[1].elements[2].elements[10].elements[0].text
-          document.getElementById('USD').textContent += exchange_rate.elements[0].elements[1].elements[2].elements[28].elements[0].text;
-          document.getElementById('GBP').textContent += exchange_rate.elements[0].elements[1].elements[2].elements[11].elements[0].text;
-          document.getElementById('MDL').textContent += exchange_rate.elements[0].elements[1].elements[2].elements[17].elements[0].text;
-          document.getElementById('PLN').textContent += exchange_rate.elements[0].elements[1].elements[2].elements[21].elements[0].text;
-        })
-        .catch((err) => console.error(err));
-      };
-      getExchangeRate();
-    });
+  

@@ -7,6 +7,11 @@ body {
   line-height: 1.6;
   font-family: "Roboto", sans-serif;
 }
+
+h1 {
+  font-size: 2rem;
+}
+
 .alert-error {
   color: #a94442;
   background-color: #f2dede;
@@ -64,6 +69,13 @@ footer {
   width: 100%;
 }
 
+#article_inside_img_dashboard {
+  margin-right: 15px;
+  border-radius: 3px;
+  width: 100%;
+  max-width: 150px;
+}
+
 a {
   color: #0f4476;
   text-decoration: none;
@@ -115,7 +127,9 @@ a:hover {
 }
 
 .sidebar_title {
-  font-size: 18px;
+  font-size: 30px;
+  font-style: italic;
+  font-weight: bold;
   color: #0f4476;
   border-bottom: 2px solid #0f4476;
   padding-bottom: 3px;
@@ -137,6 +151,13 @@ td {
   vertical-align: top;
   margin-right: 8px;
   border: 0;
+}
+
+/* Date published */
+
+.published-date {
+  color: #999;
+  font-size: 0.8rem;
 }
 
 /* Add, edit and delete articles */
@@ -302,6 +323,9 @@ td {
 
 /* Extra small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) {
+  h1 {
+    font-size: 1.6rem;
+  }
   #unorderedList {
     list-style-type: none;
     columns: 2;
@@ -312,5 +336,9 @@ td {
 
   #social-media-footer {
     padding-bottom: 30px;
+  }
+
+  .page-item {
+    display: flex;
   }
 }

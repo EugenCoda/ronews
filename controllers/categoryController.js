@@ -41,9 +41,9 @@ exports.category_detail = function (req, res, next) {
         })
           .skip((page - 1) * pagination)
           .limit(pagination)
-          .sort("title")
           .populate("createdBy")
           .populate("category")
+          .sort([["createdAt", "descending"]])
           .exec(callback);
       },
       category_article_count: (callback) => {
@@ -213,15 +213,16 @@ exports.category_delete_post = function (req, res, next) {
         return;
       } else {
         // Category has no articles. Delete object and redirect to the list of categories.
-        Category.findByIdAndRemove(req.body.categoryid, function deleteCategory(
-          err
-        ) {
-          if (err) {
-            return next(err);
+        Category.findByIdAndRemove(
+          req.body.categoryid,
+          function deleteCategory(err) {
+            if (err) {
+              return next(err);
+            }
+            // Success - go to category list
+            res.redirect("/categories");
           }
-          // Success - go to category list
-          res.redirect("/categories");
-        });
+        );
       }
     }
   );
@@ -278,16 +279,18 @@ exports.category_update_post = [
       return;
     } else {
       // Data from form is valid. Update the record.
-      Category.findByIdAndUpdate(req.params.id, category, {}, function (
-        err,
-        thecategory
-      ) {
-        if (err) {
-          return next(err);
+      Category.findByIdAndUpdate(
+        req.params.id,
+        category,
+        {},
+        function (err, thecategory) {
+          if (err) {
+            return next(err);
+          }
+          // Successful - redirect to category detail page.
+          res.redirect(thecategory.url);
         }
-        // Successful - redirect to category detail page.
-        res.redirect(thecategory.url);
-      });
+      );
     }
   },
 ];

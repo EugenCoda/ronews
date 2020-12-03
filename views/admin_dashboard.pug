@@ -47,4 +47,15 @@ block content
         td !{data.comment_count}
         td
 
-
+  //- Upload Image Form
+  hr
+  h3 Upload Image
+  br
+  //- name of the image will be equal to article id -> passed to Storage Engine
+  form(action='/dashboard', method='post', enctype='multipart/form-data')
+    input(type='file', accept='image/*', name='photo')
+    input(type='submit', value='upload')
+  hr
+  if imgFiles !== undefined
+    each image in imgFiles
+      img(id='article_inside_img_dashboard', src=image, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=image, alt=image)

@@ -24,8 +24,8 @@ block head
 block content
   include helpers
   .container-fluid
-    h1(style='font-size: 2rem;')= article.title
-    h6 #{article.createdBy.name} - #{moment(article.createdAt).format('MMM D, YYYY HH:mm')}
+    h1= article.title
+    p by #{article.createdBy.name} - #{moment(article.createdAt).format('LLLL')}
     .container-fluid
       .row
         .col-sm-4
@@ -33,14 +33,11 @@ block content
             a.article-tag(href=val.url) #{val.name}
             if index < article.category.length - 1
               |  
-    hr
-  .container-fluid
-    .row
-      .col-sm-10
-        img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
+    br
   .container-fluid
     .row
       .col-sm-8
+        img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
         div
           p!= article.text
           .container-fluid
@@ -106,6 +103,12 @@ block content
                               div.article-content
                                 h5 
                                   a.article_title(href=cat_article.url) #{cat_article.title}
+                                div
+                                  span.published-date 
+                                    i.far.fa-clock
+                                    | 
+                                    | #{moment(cat_article.createdAt).format('LL')}
+                                br
                                 div
                                   p(style='display:inline') !{truncate(cat_article.text, 150)} ...
                         hr
