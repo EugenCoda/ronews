@@ -4,6 +4,7 @@ const { ensureAuthenticated, ensureAdmin } = require("../middleware/auth");
 
 // Require controller modules.
 var article_controller = require("../controllers/articleController");
+var index_controller = require("../controllers/indexController");
 
 /// ARTICLE ROUTES ///
 
@@ -41,5 +42,8 @@ router.post("/:id/:slug", ensureAdmin, article_controller.article_detail_post);
 
 // GET request for list of all Articles.
 router.get("/", ensureAdmin, article_controller.article_list);
+
+/* GET exchange rate - from INDEX. */
+router.get("/:id/:slug/exchange", index_controller.exchange_rate);
 
 module.exports = router;

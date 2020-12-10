@@ -12,7 +12,7 @@ var index_controller = require("../controllers/indexController");
 router.get("/", index_controller.main_page);
 
 /* GET exchange rate. */
-router.get("/exchange", ensureAdmin, index_controller.exchange_rate);
+router.get("/exchange", index_controller.exchange_rate);
 
 // GET request for SEARCH.
 router.get("/search", cors(), index_controller.search);

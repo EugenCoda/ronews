@@ -56,15 +56,23 @@ Ro News
 - Added CKFinder (file uploader)
 - Updated sitemap
 
-  3/12/2020
+  12/3/2020
 
 - Added image uploader(multer) to the admin dashboard - for inserting images inside an article
 - Moved exchange rate and pagination in separate file
 - Fixed the sorting of articles for a category
 - Tweaked the published date, title font size, article image size, sidebar article format
 
+  12/10/2020
+
+- Added emoji & image2 plugind to ckeditor, removed CKFinder
+- Fixed exchange rate for individual article
+- Image inside article - working, but not responsive (CKEditor solution requires paid cloud subscription)
+- Related articles algorithm - fixed to show the latest articles
+
 TODO
 
+- special characters - truncate
 - SEO
 - comments section
 - newsletter

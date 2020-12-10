@@ -22,7 +22,9 @@
     script.
       window.addEventListener('DOMContentLoaded', (event) => {
         //- console.log('DOM fully loaded and parsed');
-        function getExchangeRate(){fetch("exchange")
+        //- data is fetched on the backend first and then to both index and articles routes
+        let url = window.location.pathname.includes("articles") ? `${window.location.pathname}/exchange` : "exchange";
+        function getExchangeRate(){fetch(url)
           .then((response) => {return response.json()})
           .then(function(data) {
             let exchange_rate = data;

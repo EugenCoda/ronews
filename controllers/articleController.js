@@ -378,7 +378,7 @@ exports.article_detail_get = function (req, res, next) {
           .populate("article")
           .populate("createdBy")
           .populate("category")
-          .sort([["createdAt", "ascending"]])
+          .sort([["createdAt", "descending"]])
           .limit(30)
           .exec(callback);
       },

@@ -34,12 +34,18 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         "default-src": ["'self'"],
-        "connect-src": ["'self'", "www.google-analytics.com"],
+        "connect-src": [
+          "'self'",
+          "cdn.ckeditor.com",
+          "www.google-analytics.com",
+        ],
         "script-src": [
           "'self'",
           "code.jquery.com",
           "cdn.jsdelivr.net",
           "stackpath.bootstrapcdn.com",
+          "cdn.ckeditor.com",
+          "ckeditor.iframe.ly",
           "cdnjs.cloudflare.com",
           "www.google-analytics.com",
           "www.googletagmanager.com",
@@ -52,6 +58,8 @@ app.use(
           "'self'",
           "cdn.jsdelivr.net",
           "stackpath.bootstrapcdn.com",
+          "cdn.ckeditor.com",
+          "ckeditor.com",
           "cdnjs.cloudflare.com",
           "fonts.googleapis.com",
           "'unsafe-inline'",
@@ -64,13 +72,16 @@ app.use(
         ],
         "img-src": [
           "'self'",
+          "romanianreporter.com",
           "www.google-analytics.com",
+          "cdn.ckeditor.com",
           "cdnjs.cloudflare.com",
           "syndication.twitter.com",
           "data:",
         ],
         "frame-src": [
           "'self'",
+          "www.youtube.com",
           "www.facebook.com",
           "web.facebook.com",
           "platform.twitter.com",
