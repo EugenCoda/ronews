@@ -50,17 +50,17 @@ nav(aria-label='Main page')
           if (Number.isInteger(article_count/pagination))
             li.page-item
               a.page-link(href=`/?page=${Math.floor(article_count/pagination)}&pagination=${pagination}`, aria-label='Last')
-                span(aria-hidden='true') Last »»
+                span(aria-hidden='true') Last
           else
             li.page-item
               a.page-link(href=`/?page=${Math.floor(article_count/pagination) + 1}&pagination=${pagination}`, aria-label='Last')
-                span(aria-hidden='true') Last »»
+                span(aria-hidden='true') Last
         else
           //- We are on page 2 or more, enable "first", "previous", "next" and "last", index the 3 pages
           if article_count > (page * pagination)
             li.page-item
               a.page-link(href=`/?page=1&pagination=${pagination}`, aria-label='First')
-                span(aria-hidden='true') «« First
+                span(aria-hidden='true') First
             li.page-item
               a.page-link(href=`/?page=${page-1}&pagination=${pagination}`, aria-label='Previous')
                 span(aria-hidden='true') «
@@ -77,16 +77,16 @@ nav(aria-label='Main page')
             if (Number.isInteger(article_count/pagination))
               li.page-item
                 a.page-link(href=`/?page=${Math.floor(article_count/pagination)}&pagination=${pagination}`, aria-label='Last')
-                  span(aria-hidden='true') Last »»
+                  span(aria-hidden='true') Last
             else
               li.page-item
                 a.page-link(href=`/?page=${Math.floor(article_count/pagination) + 1}&pagination=${pagination}`, aria-label='Last')
-                  span(aria-hidden='true') Last »»
+                  span(aria-hidden='true') Last
           //- We are on the last page, enable "first" and "previous", disable "next", index the 3 pages starting from the last one
           else
             li.page-item
               a.page-link(href=`/?page=1&pagination=${pagination}`, aria-label='First')
-                span(aria-hidden='true') «« First
+                span(aria-hidden='true') First
             li.page-item
               a.page-link(href=`/?page=${page-1}&pagination=${pagination}`, aria-label='Previous')
                 span(aria-hidden='true') «

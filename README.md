@@ -70,14 +70,18 @@ Ro News
 - Image inside article - working, but not responsive (CKEditor solution requires paid cloud subscription)
 - Related articles algorithm - fixed to show the latest articles
 
+  12/17/2020
+
+- Mobile - container padding, pagination design, article tag design, social media buttons padding
+- Search - design
+
 TODO
 
-- special characters - truncate
+- Search - in progress (search for category + pagination)
 - SEO
 - comments section
 - newsletter
 - logo
-- Search - in progress (search for category + pagination)
 
 Notes:
 

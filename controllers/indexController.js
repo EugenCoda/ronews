@@ -91,7 +91,7 @@ exports.search = (req, res, next) => {
   var search = req.query.search;
 
   if (search == "") {
-    // Cannot perform the seach with empty string.
+    // Cannot perform the search with empty string.
     req.flash("danger", "Please enter some text to perform a search.");
     res.redirect("/");
     return;

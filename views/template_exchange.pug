@@ -1,20 +1,21 @@
 .exchange_rate
   br
   h6.sidebar_title BNR Exchange Rate
-  p#publishingdate      
   .container-fluid
-    .row
-      img(id='currency', src='/images/currencies/eur.jpg', title='euro currency', alt='euro currency') 
-      p#EUR EUR = 
-    .row
-      img(id='currency', src='/images/currencies/usd.jpg', title='usd currency', alt='usd currency')
-      p#USD USD = 
-    .row
-      img(id='currency', src='/images/currencies/gbp.jpg', title='gbp currency', alt='gbp currency')
-      p#GBP GBP = 
-    if user && user.email == env.ADMIN_EMAIL
-      p#MDL  MDL = 
-      p#PLN  PLN = 
+    p#publishingdate      
+    .container-fluid
+      .row
+        img(id='currency', src='/images/currencies/eur.jpg', title='euro currency', alt='euro currency') 
+        p#EUR EUR = 
+      .row
+        img(id='currency', src='/images/currencies/usd.jpg', title='usd currency', alt='usd currency')
+        p#USD USD = 
+      .row
+        img(id='currency', src='/images/currencies/gbp.jpg', title='gbp currency', alt='gbp currency')
+        p#GBP GBP = 
+      if user && user.email == env.ADMIN_EMAIL
+        p#MDL  MDL = 
+        p#PLN  PLN = 
 
 
     //- Display Exchange Rate

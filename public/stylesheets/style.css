@@ -101,11 +101,9 @@ a:hover {
   border-radius: 2px;
   background-color: #0f4476;
   color: white;
-  padding: 7px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  margin-right: 5px;
-  font-size: 13px;
+  padding: 5px;
+  margin: 4px 4px 4px 0;
+  font-size: 12px;
   line-height: 20px;
   text-transform: uppercase;
   text-decoration: none;
@@ -115,11 +113,6 @@ a:hover {
 .article-tag:hover {
   text-decoration: none;
   color: rgb(204, 200, 223);
-}
-
-.search-box {
-  margin: 0;
-  margin-top: 30px;
 }
 
 .sidebar-article {
@@ -321,6 +314,14 @@ td {
   columns: 3;
 }
 
+/* Small devices (landscape phones, less than 768px) */
+@media (max-width: 767.98px) {
+  .container-fluid {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
+
 /* Extra small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) {
   h1 {
@@ -336,9 +337,5 @@ td {
 
   #social-media-footer {
     padding-bottom: 30px;
-  }
-
-  .page-item {
-    display: flex;
   }
 }

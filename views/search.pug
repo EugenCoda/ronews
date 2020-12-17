@@ -6,21 +6,29 @@ block content
   .container-fluid
     .row
       each article in articles
-          .col-md-4  
-            .row-md-6
-              div.article-content
-                h6 
-                  a.article_title(href=`/articles/${article._id}/${article.slug}`) #{article.title} | #{moment(article.createdAt).fromNow()}
+          .col-md-4.col-sm-6  
             .row-md-6
               figure.article-thumb
                 a(href=`/articles/${article._id}/${article.slug}`)
                   img(id='article_img', src=`/images/articles/${article._id}.jpg`, onerror="this.onerror=null;this.src='/images/articles/image_missing.svg';", title=`${article.title}`, alt=`${article.title}`)
+            .row-md-6
+              .article-content
+                h6 
+                  a.article_title(href=`/articles/${article._id}/${article.slug}`) #{article.title}
+                div
+                  span.published-date 
+                    i.far.fa-clock
+                    | 
+                    | #{moment(article.createdAt).format('LL')}
+                br
+    hr
+    .row
       each category in categories
-              .col-md-4  
+              .col-md-4.col-sm-6  
                 .row-md-6
-                  div.article-content
-                    h6 
-                      a.article_title(href=`/categories/${category._id}/${category.slug}`) #{category.name}
+                  .article-content
+                    h6 See all articles in category: 
+                      a.article-tag(href=`/categories/${category._id}/${category.slug}`) #{category.name}
                      
   
   //- TODO - pagination
