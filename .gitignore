@@ -1,4 +1,4 @@
 node_modules
 config/config.env
+config/notes.md
 public/images/articles
-notes.md
